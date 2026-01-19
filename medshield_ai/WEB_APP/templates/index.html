@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MedShield AI – Lavender Unified Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<style>
+  :root {
+    --lavender-gradient: linear-gradient(135deg, #f8f6ff, #e6e0fa, #d1c4e9);
+    --lavender-deep: #7e57c2;
+    --lavender-accent: #b39ddb;
+    --text-dark: #2e224f;
+    --card-bg: #ffffff;
+    --success: #43a047;
+    --warn: #fbc02d;
+    --danger: #e53935;
+  }
+
+  /* Base structure */
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--lavender-gradient);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .navbar {
+    background-color: var(--lavender-deep);
+  }
+
+  .navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(126, 87, 194, 0.12);
+  }
+
+  /* Role selection */
+  #roleSelection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .role-selection-row {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+
+  .role-card {
+    cursor: pointer;
+    width: 240px;
+    height: 160px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.28s ease;
+    box-shadow: 0 8px 25px rgba(126, 87, 194, 0.14);
+    background: #fff;
+  }
+
+  .role-card:hover {
+    transform: scale(1.12);
+    box-shadow: 0 12px 40px rgba(126, 87, 194, 0.28);
+  }
+
+  .role-card h5 {
+    color: var(--lavender-deep);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .role-card p {
+    color: #5c4b91;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  /* Main interface */
+  #mainInterface {
+    flex: 1;
+    display: none;
+    padding: 90px 16px 80px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  #mainInterface .card {
+    padding: 22px;
+    text-align: center;
+  }
+
+  #predictForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #predictForm .form-control {
+    width: 92%;
+    max-width: 640px;
+  }
+
+  #predictForm button {
+    width: 92%;
+    max-width: 640px;
+  }
+
+  /* Result area */
+  .chart-container {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 18px;
+  }
+
+  .progress {
+    height: 22px;
+    border-radius: 12px;
+    background: #ede7f6;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    transition: width 0.8s ease, background-color 0.3s ease;
+  }
+
+  /* Molecular properties */
+  #molPropsCard {
+    display: none;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 720px;
+    padding: 22px;
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  #molPropsCard h5 {
+    color: var(--lavender-deep);
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+  }
+
+  #molPropsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  #molPropsList li {
+    min-width: 120px;
+    color: #3f2a6d;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #fbf8ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(126, 87, 194, 0.06);
+  }
+
+  /* Risk gauge */
+  .gauge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  /* Chatbot */
+  .chatbot-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--lavender-deep);
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.28);
+    z-index: 1200;
+  }
+
+  .chat-window {
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 320px;
+    height: 420px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(126, 87, 194, 0.28);
+    overflow: hidden;
+    flex-direction: column;
+    z-index: 1200;
+  }
+
+  .chat-header {
+    background: var(--lavender-deep);
+    color: white;
+    padding: 10px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+  }
+
+  .chat-input {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .chat-input input {
+    flex: 1;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+  }
+
+  .chat-quick {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px;
+  }
+
+  /* Footer — updated and fixed */
+  .footer {
+    background: #f4f0ff;
+    border-top: 3px solid var(--lavender-accent);
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    margin-top: auto;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(126, 87, 194, 0.1);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 35px 20px 25px;
+    align-items: center;
+  }
+
+  .footer-logo {
+    flex: 1 1 260px;
+    text-align: center;
+  }
+
+  .footer-logo h4 {
+    color: var(--lavender-deep);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .footer-logo p {
+    color: #6b5b95;
+    font-size: 0.92rem;
+    margin: 6px 0 0;
+  }
+
+  .footer-links, .footer-connect {
+    flex: 1 1 220px;
+  }
+
+  .footer-links h5, .footer-connect h5 {
+    font-weight: 600;
+    color: var(--lavender-deep);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--lavender-accent);
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+  .footer-links a, .footer-connect a {
+    color: #5c4b91;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover, .footer-connect a:hover {
+    color: var(--lavender-deep);
+    text-decoration: underline;
+  }
+
+  .footer-bottom {
+    background: var(--lavender-deep);
+    color: #fff;
+    text-align: center;
+    padding: 14px 10px;
+    font-size: 0.9rem;
+  }
+
+  /* Back to top */
+  #toTop {
+    position: fixed;
+    right: 22px;
+    bottom: 95px;
+    background: var(--lavender-deep);
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(126, 87, 194, 0.3);
+    border: none;
+  }
+
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.9s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Dark mode */
+  .dark-mode {
+    background: #0f0f11 !important;
+    color: #e7e3ff !important;
+  }
+
+  .dark-mode .card,
+  .dark-mode .navbar,
+  .dark-mode .modal-content {
+    background: #141418 !important;
+    color: #fff !important;
+  }
+
+  .dark-mode .form-control {
+    background: #1e1e24;
+    color: #fff;
+    border: 1px solid #333;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 640px) {
+    .brand-text {
+      font-size: 2rem !important;
+    }
+
+    .role-card {
+      width: 90% !important;
+      height: auto;
+      padding: 20px;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  /* Researcher notes box */
+#researcherNotes {
+  border-radius: 10px;
+  border: 1px solid #d1c4e9;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#researcherNotes:focus {
+  border-color: var(--lavender-deep);
+  box-shadow: 0 0 8px rgba(126, 87, 194, 0.3);
+  outline: none;
+}
+
+/* -------------------------------
+   🎙️ Mic Buttons Styling
+   ------------------------------- */
+#micDrug, #micGene {
+  background-color: #f3e8ff;
+  color: #5a189a;
+  border: 1px solid #cbb5f5;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(90, 24, 154, 0.1);
+}
+
+#micDrug:hover, #micGene:hover {
+  background-color: #d0b3ff;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(90, 24, 154, 0.25);
+}
+
+#micDrug.listening, #micGene.listening {
+  animation: pulse 1s infinite;
+  background-color: #d1c4e9;
+  color: white;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(106, 27, 154, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
+}
+
+/* 🔹 Scanner & Molecule UI Styling */
+#moleculeCard img { border: 2px solid #eee; background: #fafafa; transition: transform 0.3s; }
+#moleculeCard img:hover { transform: scale(1.05); }
+#quickRiskBadge { margin-left: 8px; }
+.modal-dialog { max-width: 420px; }
+
+
+</style>
+
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="navbar fixed-top">
+    <div class="container-fluid px-4">
+      <div class="d-flex align-items-center gap-3">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#" onclick="goHome()">
+          <span style="font-size:22px">🧬</span>
+          <span style="font-size:18px; font-weight:800">MedShield AI</span>
+        </a>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button id="homeBtn" class="btn btn-sm btn-outline-light me-2" onclick="goHome()">Home</button>
+        <button id="darkModeToggle" class="btn btn-sm btn-outline-light me-2">🌙 Dark</button>
+        <button id="reportDownloadBtn" class="btn btn-sm btn-light" style="color: var(--lavender-deep); font-weight:600;">Download Report</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ROLE SELECTION -->
+  <div id="roleSelection" class="fade-in">
+    <div class="text-center mb-5">
+      <div class="brand-logo" style="display:flex; align-items:center; gap:12px; justify-content:center;">
+        <div style="font-size:42px; background:linear-gradient(135deg,#ff6ec4,#7873f5); -webkit-background-clip:text; background-clip:text; color:transparent;">🧬</div>
+        <h1 class="brand-text" style="font-size:36px; font-weight:800; margin:0; background:linear-gradient(135deg,#6a1b9a,#9575cd); -webkit-background-clip:text; color:transparent;">MedShield AI</h1>
+      </div>
+
+      <h2 class="fw-bold mt-3" style="color:var(--lavender-deep);">Select Your Role</h2>
+      <p class="text-muted">Access tailored tools for Patients, Doctors, and Researchers.</p>
+    </div>
+
+    <div class="role-selection-row">
+      <div class="role-card" onclick="selectRole('patient')">
+        <h5>🧍 Patient</h5>
+        <p>Personalized health tracking</p>
+      </div>
+
+      <div class="role-card" onclick="selectRole('doctor')">
+        <h5>👨‍⚕️ Doctor</h5>
+        <p>Patient risk predictions</p>
+      </div>
+
+      <div class="role-card" onclick="selectRole('researcher')">
+        <h5>🧠 Researcher</h5>
+        <p>Genetic data analysis</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN INTERFACE -->
+  <div id="mainInterface" class="container fade-in" style="display:none; max-width:980px;">
+    <div class="card p-4">
+      <h3 id="headerTitle" class="text-center mb-3"></h3>
+
+      <form id="predictForm" class="mb-2">
+        <div id="roleFields"></div>
+
+        <!-- Drug input with mic -->
+        <div class="input-group mb-2 mx-auto" style="width:92%; max-width:640px;">
+          <span class="input-group-text">💊</span>
+          <input type="text" id="drug" class="form-control" placeholder="Drug name (e.g. Warfarin)" required>
+          <button class="btn" type="button" id="micDrug" title="Speak drug name">🎙️</button>
+        </div>
+
+        <!-- Gene input with mic -->
+        <div class="input-group mb-2 mx-auto" style="width:92%; max-width:640px;">
+          <span class="input-group-text">🧬</span>
+          <input type="text" id="gene" class="form-control" placeholder="Gene name (optional)">
+          <button class="btn" type="button" id="micGene" title="Speak gene name">🎙️</button>
+        </div>
+
+
+        <div class="d-flex gap-2 justify-content-center mt-2" style="width:100%">
+          <button type="submit" class="btn btn-primary">Predict Risk</button>
+          <button id="resetBtn" type="button" class="btn btn-outline-secondary" onclick="resetForm()">Reset</button>
+        </div>
+      </form>
+
+      <!-- RESULT -->
+      <div id="result" class="mt-4" style="display:none;">
+        <h5>Prediction Result</h5>
+        <div id="info" class="text-secondary mb-2"></div>
+
+        <div class="progress mb-2">
+          <div id="riskBar" class="progress-bar" style="width:0%;"></div>
+        </div>
+        <div id="riskLabel" style="font-weight:700; color:var(--lavender-deep);"></div>
+
+        <!-- Gauge + charts -->
+        <div class="d-flex flex-column align-items-center mt-3">
+          <div class="gauge-container">
+            <canvas id="riskGauge" width="160" height="160"></canvas>
+          </div>
+
+          <div class="chart-container w-100 mt-3">
+            <canvas id="geneChart" style="max-height:320px"></canvas>
+          </div>
+
+          <div class="chart-container w-100 mt-3" id="pieWrap" style="display:none;">
+            <canvas id="summaryPie" style="max-height:260px"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Molecular properties card -->
+     <!-- Molecular properties card -->
+      <div id="molPropsCard" class="card mt-3">
+        <h5 class="mb-2">Molecular Properties</h5>
+        <ul id="molPropsList"></ul>
+      </div>
+
+<!-- 🔹 NEW: Molecule Structure Display -->
+  <div id="moleculeCard" class="card mt-3 p-3" style="display:none;">
+    <h5 class="mb-2">🧬 Molecule Structure</h5>
+    <div class="text-center">
+      <img id="moleculeImage" src="" alt="Molecule Image"
+          class="img-fluid rounded shadow-sm"
+          style="max-height:280px;"/>
+    </div>
+  </div>
+
+<!-- 🔹 NEW: AI Suggested Alternatives -->
+<div id="alternativesCard" class="card mt-3 p-3" style="display:none;">
+  <h5 class="mb-2">💡 Safer Drug Alternatives</h5>
+  <ul id="alternativesList" class="list-group list-group-flush"></ul>
+</div>
+
+<!-- 🔹 NEW: Quick Scanner Controls -->
+<div class="d-flex align-items-center gap-2 mt-3">
+  <button id="openScannerBtn" class="btn btn-outline-primary btn-sm">🔍 Scan Drug Barcode / QR</button>
+  <div id="quickRiskBadge" style="display:none;">
+    <span id="riskBadge" class="badge rounded-pill"></span>
+  </div>
+</div>
+
+<!-- 🔹 NEW: Scanner Modal -->
+<div id="scannerModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scan Drug Barcode / QR</h5>
+        <button type="button" class="btn-close" id="closeScannerBtn" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <video id="scannerVideo" autoplay playsinline style="width:100%; max-height:360px; background:#000;"></video>
+        <p class="small text-muted mt-2">
+          Point your camera at the barcode or QR code on the package.
+        </p>
+        <div id="scannerStatus" class="small text-muted">Waiting for code...</div>
+      </div>
+      <div class="modal-footer">
+        <button id="manualEntryBtn" class="btn btn-link">Enter drug name manually</button>
+        <button id="stopScannerBtn" class="btn btn-secondary">Stop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    <!-- Recent Activities -->
+    <div id="recentActivities" class="mt-4" style="display:none;">
+      <div class="card p-3">
+        <h5>🕒 Recent Activities</h5>
+        <ul id="recentList" class="mb-0"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot -->
+  <div class="chatbot-btn" onclick="toggleChat()">💬</div>
+
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">MedBot Assistant</div>
+    <div class="chat-body" id="chatBody">
+      <p><b>🤖:</b> Hello! Ask me about your medication or genetic risks.</p>
+    </div>
+
+    <div class="chat-quick p-2">
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('What is Warfarin risk?')">Warfarin</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('Show me CYP2C9')">CYP2C9</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('How to reduce risk?')">Reduce risk</button>
+    </div>
+
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Type a question..." />
+      <button class="btn" onclick="sendChat()" style="background:var(--lavender-deep); color:white;">Send</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer mt-5">
+    <div class="footer-content container">
+      <div class="footer-logo">
+        <div style="font-size:34px">🧬</div>
+        <h4 style="margin:6px 0 4px; color:var(--lavender-deep)">MedShield AI</h4>
+        <p style="color:#6b5b95; margin:0;">Empowering safer prescriptions through AI-driven drug–gene insights.</p>
+      </div>
+
+      <div class="footer-links">
+        <h5 style="color:var(--lavender-deep);">More</h5>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" onclick="goHome()">Home</a></li>
+          <li><a href="#" onclick="alert('About: MedShield AI — demo')">About</a></li>
+          <li><a href="#" onclick="alert('Contact form coming soon')">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-connect">
+        <h5 style="color:var(--lavender-deep);">Connect</h5>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" target="_blank">LinkedIn</a></li>
+          <li><a href="#" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="margin:0;">© 2025 MedShield AI • Privacy Policy • Designed with 💜</p>
+    </div>
+  </footer>
+
+  <button id="toTop" title="Back to top">↑</button>
+
+  <!-- Toast container for errors / notifications -->
+  <div id="toastContainer" style="position:fixed; top:100px; right:20px; z-index:1500;"></div>
+
+<script>
+/* -------------------------------
+   State + helpers
+   ------------------------------- */
+let role = "";
+let chart = null, pie = null, recent = [];
+let lastResult = null;
+
+/* -------------------------------
+   Utilities
+   ------------------------------- */
+function showToast(msg, bg='danger', ms=3500) {
+  const id = 't'+Date.now();
+  const el = document.createElement('div');
+  el.className = `toast align-items-center text-bg-${bg} border-0 show`;
+  el.style.marginBottom = '8px';
+  el.setAttribute('role','alert');
+  el.innerHTML = `<div class="d-flex"><div class="toast-body">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.closest('.toast').remove()"></button></div>`;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(()=> el.remove(), ms);
+}
+
+function goHome(){
+  role = "";
+  document.getElementById('mainInterface').style.display = 'none';
+  document.getElementById('roleSelection').style.display = 'flex';
+  // clear some UI:
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('molPropsCard').style.display = 'none';
+}
+
+/* -------------------------------
+   Role selection
+   ------------------------------- */
+function selectRole(r){
+  role = r;
+  document.getElementById('roleSelection').style.display = 'none';
+  document.getElementById('mainInterface').style.display = 'block';
+  const header = document.getElementById('headerTitle');
+  const fields = document.getElementById('roleFields');
+
+  if(r === 'patient'){
+    header.innerHTML = '🧍 Patient Portal';
+    fields.innerHTML = `
+      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2">
+        <input id="name" class="form-control" placeholder="Your name" />
+        <input id="age" type="number" class="form-control" placeholder="Age" style="max-width:100px"/>
+      </div>`;
+    document.getElementById('recentActivities').style.display = 'block';
+  } else if(r === 'doctor'){
+    header.innerHTML = '👨‍⚕️ Doctor Dashboard';
+    fields.innerHTML = `
+      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2">
+        <input id="doctorName" class="form-control" placeholder="Doctor name" />
+        <input id="hospital" class="form-control" placeholder="Hospital" />
+      </div>
+    `;
+    document.getElementById('recentActivities').style.display = 'none';
+  } else {
+  header.innerHTML = '🧠 Researcher Portal';
+  fields.innerHTML = `
+    <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2 mb-2">
+      <input id="researcherName" class="form-control" placeholder="Researcher name" />
+      <input id="study" class="form-control" placeholder="Study / Dataset" />
+    </div>
+
+    <div style="width:92%; max-width:640px; margin:0 auto;">
+      <textarea id="researcherNotes" class="form-control" rows="3"
+        placeholder="Add any notes you know about the drug or gene prediction context..."></textarea>
+    </div>
+  `;
+  document.getElementById('recentActivities').style.display = 'none';
+}
+
+}
+
+/* -------------------------------
+   Predict (calls Flask /predict)
+   ------------------------------- */
+async function predictDrug(drug, gene) {
+  try {
+    const response = await fetch('/predict', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ drug, gene, role })
+    });
+    if(!response.ok){
+      const err = await response.json().catch(()=>({error:'Unknown error'}));
+      throw new Error(err.error || 'Server error');
+    }
+    return await response.json();
+  } catch(err){
+    throw err;
+  }
+}
+
+/* Form handler */
+document.getElementById('predictForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const drug = document.getElementById('drug').value.trim();
+  const gene = document.getElementById('gene').value.trim();
+
+  if(!drug){
+    showToast('Please enter a drug name', 'danger');
+    return;
+  }
+
+  try {
+    // show brief UI feedback
+    showToast('Analyzing... (simulated)', 'info', 1200);
+
+    const result = await predictDrug(drug, gene);
+    lastResult = result; // keep for report download
+
+    // overall risk
+    const risk = result.overall_risk || 'Low';
+    const color = risk === 'High' ? getComputedStyle(document.documentElement).getPropertyValue('--danger').trim() || '#e53935'
+                : risk === 'Medium' ? getComputedStyle(document.documentElement).getPropertyValue('--warn').trim() || '#fbc02d'
+                : getComputedStyle(document.documentElement).getPropertyValue('--success').trim() || '#43a047';
+    const percent = risk === 'High' ? 90 : risk === 'Medium' ? 60 : 30;
+
+    // update progress bar + text
+    const bar = document.getElementById('riskBar');
+    bar.style.width = percent + '%';
+    bar.style.backgroundColor = color;
+    document.getElementById('riskLabel').textContent = `${risk} Risk (${(percent)}%)`;
+    document.getElementById('info').innerHTML = `<b>Drug:</b> ${result.drug} — <small style="color:#6b5b95">${result.role || role}</small>`;
+
+    // show result block
+    document.getElementById('result').style.display = 'block';
+
+    // build bar chart (gene-level)
+    if(result.rows && result.rows.length){
+      const labels = result.rows.map(r => r.gene);
+      const scores = result.rows.map(r => (r.score===null?0:r.score));
+      const colors = result.rows.map(r => r.color || '#7e57c2');
+
+      // destroy previous
+      if(chart) chart.destroy();
+
+      const ctx = document.getElementById('geneChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: { labels, datasets: [{ label: `${result.drug} Predicted Affinity`, data: scores, backgroundColor: colors, borderRadius:6, barThickness: 36 }] },
+        options: {
+          responsive: true,
+          animation:{duration:900, easing:'easeOutCubic'},
+          interaction: { mode:'nearest', axis:'x', intersect:true },
+          scales: {
+            y: { beginAtZero:true, max:1, ticks:{ color:'#5e35b1' } },
+            x: { ticks:{ color:'#5e35b1' } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  const v = ctx.raw;
+                  const r = result.rows[ctx.dataIndex];
+                  return `${r.gene}: ${v} — risk: ${r.risk}`;
+                }
+              }
+            },
+            legend: { display:false },
+            title: { display:true, text:'Predicted Gene Affinities', color:'#4a148c', font:{size:15, weight:'700'} }
+          },
+          onHover: (evt, activeEls) => {
+            evt.native && (evt.native.target.style.cursor = activeEls && activeEls.length ? 'pointer' : 'default');
+          }
+        }
+      });
+
+      // build pie summary
+      const labelsPie = result.rows.map(r => r.gene);
+      const dataPie = result.rows.map(r => Math.round((r.score||0)*100));
+      const colorsPie = result.rows.map(r => r.color || '#7e57c2');
+
+      if(pie) pie.destroy();
+      const pctx = document.getElementById('summaryPie').getContext('2d');
+      pie = new Chart(pctx, {
+        type: 'doughnut',
+        data: { labels: labelsPie, datasets:[{ data: dataPie, backgroundColor: colorsPie }] },
+        options: { responsive:true, plugins:{ legend:{ position:'bottom' } } }
+      });
+
+      document.getElementById('pieWrap').style.display = 'block';
+    } else {
+      // no rows
+      if(chart) { chart.destroy(); chart = null; }
+      document.getElementById('pieWrap').style.display = 'none';
+    }
+
+    // update circular gauge & molecular props
+    updateGauge(percent, color);
+    displayMolProps(result.props || {});
+
+    // track recent for patient
+    if(role === 'patient') addRecent(result.drug);
+
+  } catch(err) {
+    console.error(err);
+    showToast(err.message || 'Prediction failed', 'danger', 4000);
+  }
+});
+
+/* -------------------------------
+   Gauge drawing (animated)
+   ------------------------------- */
+function updateGauge(percent, color) {
+  const canvas = document.getElementById('riskGauge');
+  const ctx = canvas.getContext('2d');
+  const size = Math.min(canvas.width, canvas.height);
+  const cx = canvas.width/2, cy = canvas.height/2, rad = size*0.36;
+  ctx.clearRect(0,0,canvas.width, canvas.height);
+
+  // background ring
+  ctx.beginPath();
+  ctx.arc(cx,cy,rad,0,2*Math.PI);
+  ctx.lineWidth = 14;
+  ctx.strokeStyle = '#efe8ff';
+  ctx.stroke();
+
+  // animated foreground arc
+  let start = -Math.PI/2;
+  let to = start + (percent/100) * 2 * Math.PI;
+
+  // simple animation:
+  const steps = 40; let i=0;
+  const animate = () => {
+    i++;
+    const cur = start + (i/steps)*(to-start);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // bg
+    ctx.beginPath(); ctx.arc(cx,cy,rad,0,2*Math.PI); ctx.lineWidth=14; ctx.strokeStyle='#efe8ff'; ctx.stroke();
+    // foreground
+    ctx.beginPath(); ctx.arc(cx,cy,rad,start,cur); ctx.lineWidth=14; ctx.strokeStyle=color; ctx.lineCap='round'; ctx.stroke();
+    // inner label
+    ctx.fillStyle = '#4a148c'; ctx.font = '700 18px Poppins'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    const val = Math.round(((i/steps)*(percent)));
+    ctx.fillText(val + '%', cx, cy);
+    if(i < steps) requestAnimationFrame(animate);
+  };
+  animate();
+}
+
+/* -------------------------------
+   Molecular properties display
+   ------------------------------- */
+function displayMolProps(props){
+  const molCard = document.getElementById('molPropsCard');
+  const molList = document.getElementById('molPropsList');
+  if(props && Object.keys(props).length){
+    molList.innerHTML = `
+      <li><b>MolWt</b><div>${props.MolWt ?? '—'}</div></li>
+      <li><b>LogP</b><div>${props.LogP ?? '—'}</div></li>
+      <li><b>HBA</b><div>${props.HBA ?? '—'}</div></li>
+      <li><b>HBD</b><div>${props.HBD ?? '—'}</div></li>
+      <li><b>TPSA</b><div>${props.TPSA ?? '—'}</div></li>
+      <li><b>RotB</b><div>${props.RotB ?? '—'}</div></li>
+    `;
+    molCard.style.display = 'block';
+    molCard.classList.add('fade-in');
+  } else {
+    molCard.style.display = 'none';
+  }
+}
+
+/* -------------------------------
+   Recent (patient) list
+   ------------------------------- */
+function addRecent(drug){
+  if(!recent.includes(drug)) {
+    recent.unshift(drug);
+    if(recent.length > 6) recent.pop();
+  }
+  document.getElementById('recentList').innerHTML = recent.map(d => `<li>💊 ${d}</li>`).join('');
+}
+
+/* -------------------------------
+   Chatbot
+   ------------------------------- */
+function toggleChat(){ const w = document.getElementById('chatWindow'); w.style.display = (w.style.display==='flex')? 'none':'flex'; }
+function quickChat(q){ document.getElementById('chatInput').value = q; sendChat(); }
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = (input.value||'').trim();
+  if(!text) return;
+  const body = document.getElementById('chatBody');
+  body.innerHTML += `<p><b>You:</b> ${escapeHtml(text)}</p>`;
+  body.innerHTML += `<p><b>🤖:</b> Thinking... <small style="color:#6b5b95">simulated</small></p>`;
+  body.scrollTop = body.scrollHeight;
+  input.value = '';
+
+  // Simulate a helpful reply (toy logic)
+  setTimeout(()=> {
+    const reply = generateReply(text);
+    // remove 'Thinking...' last message
+    const nodes = body.querySelectorAll('p');
+    if(nodes.length) nodes[nodes.length-1].remove();
+    body.innerHTML += `<p><b>🤖:</b> ${escapeHtml(reply)}</p>`;
+    body.scrollTop = body.scrollHeight;
+  }, 900 + Math.random()*900);
+}
+
+function generateReply(q){
+  q = q.toLowerCase();
+  if(q.includes('warfarin')) return 'Warfarin often interacts with VKORC1 and CYP2C9. Check patient genotype and INR.';
+  if(q.includes('cyp2c9') || q.includes('cyp2d6')) return 'CYP polymorphisms can change metabolism. Consider frequency of alleles in population.';
+  if(q.includes('reduce')) return 'Dose adjustments and increased monitoring are common strategies. Consult a clinician for specifics.';
+  if(q.includes('how')) return 'I can show predicted gene affinities — run a prediction with a drug name.';
+  return "I can help with predictions, brief drug–gene notes, and exporting results. Try asking: 'Predict Warfarin' or 'Show me hERG'.";
+}
+
+function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+/* -------------------------------
+   📄 MedShield AI – PDF Report Download
+   ------------------------------- */
+document.getElementById("reportDownloadBtn").addEventListener("click", () => {
+  if (!lastResult) {
+    showToast("No result to download — run a prediction first", "warning", 3000);
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  // ===== HEADER BAR (with MedShield logo) =====
+doc.setFillColor(126, 87, 194); // Lavender header bar
+doc.rect(0, 0, 210, 25, "F");
+
+// Add logo (local from Flask static path)
+const logoPath = "/static/logo.png"; // or /static/logo.png
+const logoWidth = 10, logoHeight = 10;
+doc.addImage(logoPath, "PNG", 10, 7, logoWidth, logoHeight);
+
+// Header text
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(18);
+doc.text("MedShield AI", 25, 15);
+
+doc.setFont("helvetica", "normal");
+doc.setFontSize(11);
+doc.text("AI-Driven Drug–Gene Risk Report", 120, 15);
+
+  // ===== WATERMARK =====
+  doc.setTextColor(230, 230, 250);
+  doc.setFontSize(90);
+  doc.text("🧬", 140, 180, { angle: 30, align: "center" });
+  doc.setTextColor(0, 0, 0);
+
+  // ===== META INFO =====
+  const date = new Date().toLocaleString();
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(11);
+  doc.text(`Generated on: ${date}`, 14, 34);
+  doc.text(`User Role: ${role || "N/A"}`, 14, 40);
+  doc.text(`Drug: ${lastResult.drug || "Unknown"}`, 14, 46);
+  doc.text(`Predicted Overall Risk: ${lastResult.overall_risk || "—"}`, 14, 52);
+
+  // ===== MOLECULAR PROPERTIES =====
+  const props = lastResult.props || {};
+  let y = 64;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.text("Molecular Properties", 14, y);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(11);
+  y += 8;
+  if (Object.keys(props).length) {
+    Object.entries(props).forEach(([k, v]) => {
+      doc.text(`${k}: ${v ?? "—"}`, 18, y);
+      y += 6;
+    });
+  } else {
+    doc.text("No molecular data available.", 18, y);
+    y += 6;
+  }
+
+  // ===== GENE TABLE =====
+  const rows = lastResult.rows || [];
+  if (rows.length) {
+    y += 10;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("Gene-Level Predictions", 14, y);
+    y += 8;
+    doc.setFontSize(10);
+    doc.text("Gene", 14, y);
+    doc.text("Score", 60, y);
+    doc.text("Risk", 90, y);
+    doc.text("IC50", 120, y);
+    doc.text("pActivity", 160, y);
+    y += 5;
+    doc.setFont("helvetica", "normal");
+    rows.forEach(r => {
+      doc.text(r.gene || "-", 14, y);
+      doc.text(String(r.score ?? ""), 60, y);
+      doc.text(r.risk || "-", 90, y);
+      doc.text(String(r.IC50 ?? ""), 120, y);
+      doc.text(String(r.pActivity ?? ""), 160, y);
+      y += 6;
+      if (y > 270) { doc.addPage(); y = 20; }
+    });
+  }
+
+  // ===== RECOMMENDATION =====
+  if (lastResult.recommendation) {
+    y += 10;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("AI Recommendation", 14, y);
+    y += 8;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    const textLines = doc.splitTextToSize(lastResult.recommendation, 180);
+    doc.text(textLines, 14, y);
+  }
+
+  // ===== FOOTER =====
+  doc.setDrawColor(179, 157, 219);
+  doc.line(14, 285, 196, 285);
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(10);
+  doc.setTextColor(100, 100, 100);
+  doc.text("© 2025 MedShield AI • Empowering Safer Prescriptions Through AI Insights", 14, 292);
+
+  // ===== SAVE FILE =====
+  const file = `${(lastResult.drug || "report").replace(/\s+/g, "_")}_MedShieldAI_Report.pdf`;
+  doc.save(file);
+  showToast("📄 PDF Report Downloaded", "success", 2500);
+});
+
+/* -------------------------------
+   Dark mode toggle (persist)
+   ------------------------------- */
+const dmBtn = document.getElementById('darkModeToggle');
+dmBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  const on = document.body.classList.contains('dark-mode');
+  localStorage.setItem('medshield_dark', on ? '1' : '0');
+  dmBtn.textContent = on ? '☀️ Light' : '🌙 Dark';
+});
+(function initDark(){
+  const val = localStorage.getItem('medshield_dark');
+  if(val === '1'){ document.body.classList.add('dark-mode'); dmBtn.textContent = '☀️ Light'; }
+})();
+
+/* -------------------------------
+   Reset form
+   ------------------------------- */
+function resetForm(){
+  document.getElementById('predictForm').reset();
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('molPropsCard').style.display = 'none';
+  if(chart) { chart.destroy(); chart = null; }
+  if(pie) { pie.destroy(); pie = null; }
+}
+
+/* -------------------------------
+   Back-to-top + Home behavior
+   ------------------------------- */
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => { toTop.style.display = (window.scrollY > 400) ? 'flex' : 'none'; });
+toTop.addEventListener('click', ()=> window.scrollTo({ top: 0, behavior:'smooth' }) );
+
+/* -------------------------------
+   Initialize small friendly hint
+   ------------------------------- */
+setTimeout(()=> {
+  showToast('Tip: enter a drug name (e.g. Warfarin) and click Predict', 'info', 4200);
+}, 1000);
+/* =====================================================
+   🔹 Drug Scanner + Molecule + Alternatives Integration
+   ===================================================== */
+
+// Simple barcode -> drug mapping
+const BARCODE_MAP = {
+  "0123456789012": "Warfarin",
+  "0001112223334": "Clopidogrel"
+};
+
+const openScannerBtn = document.getElementById("openScannerBtn");
+const closeScannerBtn = document.getElementById("closeScannerBtn");
+const scannerModal = document.getElementById("scannerModal");
+const scannerVideo = document.getElementById("scannerVideo");
+const scannerStatus = document.getElementById("scannerStatus");
+const stopScannerBtn = document.getElementById("stopScannerBtn");
+const manualEntryBtn = document.getElementById("manualEntryBtn");
+const quickRiskBadge = document.getElementById("quickRiskBadge");
+const riskBadge = document.getElementById("riskBadge");
+
+let streamRef = null;
+let detector = null;
+let scanActive = false;
+let scanLoopId = null;
+
+openScannerBtn.addEventListener("click", openScannerModal);
+closeScannerBtn.addEventListener("click", closeScannerModal);
+stopScannerBtn.addEventListener("click", closeScannerModal);
+manualEntryBtn.addEventListener("click", () => {
+  closeScannerModal();
+  const manualDrug = prompt("Enter drug name to check:");
+  if (manualDrug) quickCheckDrug(manualDrug.trim());
+});
+
+async function openScannerModal() {
+  scannerModal.style.display = "block";
+  scannerStatus.textContent = "Starting camera...";
+  await startScanner();
+}
+function closeScannerModal() {
+  scannerModal.style.display = "none";
+  stopScanner();
+}
+
+async function startScanner() {
+  if (scanActive) return;
+  scanActive = true;
+  try {
+    streamRef = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+    scannerVideo.srcObject = streamRef;
+    await scannerVideo.play();
+  } catch (err) {
+    scannerStatus.textContent = "Camera permission denied or not available.";
+    scanActive = false;
+    return;
+  }
+  if ("BarcodeDetector" in window) {
+    detector = new BarcodeDetector({ formats: ["ean_13", "qr_code", "code_128"] });
+    scanWithBarcodeDetector();
+  } else {
+    scannerStatus.textContent = "BarcodeDetector not supported. Use manual entry.";
+  }
+}
+
+async function scanWithBarcodeDetector() {
+  if (!scanActive) return;
+  try {
+    const barcodes = await detector.detect(scannerVideo);
+    if (barcodes && barcodes.length > 0) {
+      const codeRaw = barcodes[0].rawValue;
+      handleScannedCode(codeRaw.trim());
+      return;
+    }
+  } catch (err) {}
+  scanLoopId = requestAnimationFrame(scanWithBarcodeDetector);
+}
+
+function stopScanner() {
+  if (!scanActive) return;
+  scanActive = false;
+  if (scanLoopId) cancelAnimationFrame(scanLoopId);
+  if (streamRef) {
+    streamRef.getTracks().forEach(t => t.stop());
+    streamRef = null;
+  }
+  scannerVideo.pause();
+  scannerVideo.srcObject = null;
+}
+
+async function handleScannedCode(code) {
+  stopScanner();
+  closeScannerModal();
+  let drugName = BARCODE_MAP[code] || null;
+  if (!drugName && /^[A-Za-z\s\-]+$/.test(code)) drugName = code;
+  if (!drugName) {
+    const confirmName = prompt(`Scanned code: ${code}\nEnter the drug name:`);
+    if (confirmName) drugName = confirmName.trim();
+  }
+  if (drugName) quickCheckDrug(drugName);
+}
+
+async function quickCheckDrug(drugName) {
+  try {
+    riskBadge.className = "badge bg-secondary";
+    riskBadge.textContent = "Checking...";
+    quickRiskBadge.style.display = "inline-block";
+    const resp = await fetch("/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ drug: drugName })
+    });
+    const data = await resp.json();
+    const overall = data.overall_risk || "Low";
+    renderQuickRisk(overall);
+    // Molecule image
+    if (data.molecule_image) {
+      document.getElementById("moleculeCard").style.display = "block";
+      document.getElementById("moleculeImage").src = data.molecule_image;
+    }
+    // Alternatives
+    const altCard = document.getElementById("alternativesCard");
+    const altList = document.getElementById("alternativesList");
+    altList.innerHTML = "";
+    if (data.alternatives && data.alternatives.length > 0) {
+      data.alternatives.forEach(alt => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+        li.innerHTML = `<strong>${alt.drug}</strong><br><small>${alt.reason}</small>`;
+        altList.appendChild(li);
+      });
+      altCard.style.display = "block";
+    } else {
+      altCard.style.display = "none";
+    }
+  } catch (err) {
+    riskBadge.className = "badge bg-danger";
+    riskBadge.textContent = "Error";
+  }
+}
+
+function renderQuickRisk(risk) {
+  quickRiskBadge.style.display = "inline-block";
+  if (risk === "High") {
+    riskBadge.className = "badge bg-danger";
+    riskBadge.textContent = "High Risk";
+  } else if (risk === "Medium") {
+    riskBadge.className = "badge bg-warning text-dark";
+    riskBadge.textContent = "Medium Risk";
+  } else {
+    riskBadge.className = "badge bg-success";
+    riskBadge.textContent = "Low Risk";
+  }
+}
+
+</script>
+
+</body>
+</html>

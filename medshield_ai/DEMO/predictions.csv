@@ -1,0 +1,7 @@
+Gene,Affinity_Score,Risk_Level
+CYP2C9,0.44919312,Medium
+CYP2D6,0.49107713,Medium
+CYP3A4,0.49598077,Medium
+VKORC1,0.51278883,Medium
+hERG,0.5170788,Medium
+TPMT,0.45108896,Medium
