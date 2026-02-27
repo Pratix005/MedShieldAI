@@ -2,188 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MedShield AI - Drug-Gene Risk Prediction</title>
+  <title>MedShield AI</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
 <style>
-  /* ========================================
-     DESIGN TOKENS
-     ======================================== */
   :root {
-    --bg-primary: #f8fafc;
-    --bg-secondary: #f1f5f9;
-    --bg-card: #ffffff;
-    --bg-card-hover: #fefefe;
-    --bg-navbar: #0f172a;
-    --bg-footer: #0f172a;
-
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-    --text-on-dark: #f8fafc;
-    --text-on-accent: #ffffff;
-
-    --accent: #0ea5e9;
-    --accent-hover: #0284c7;
-    --accent-light: #e0f2fe;
-    --accent-glow: rgba(14, 165, 233, 0.15);
-
-    --success: #10b981;
-    --success-light: #d1fae5;
-    --warn: #f59e0b;
-    --warn-light: #fef3c7;
-    --danger: #ef4444;
-    --danger-light: #fee2e2;
-
-    --border: #e2e8f0;
-    --border-light: #f1f5f9;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
-    --shadow-xl: 0 16px 48px rgba(0,0,0,0.1);
-    --shadow-glow: 0 0 40px rgba(14, 165, 233, 0.08);
-
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
-    --radius-full: 9999px;
-
-    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --lavender-gradient: linear-gradient(135deg, #f8f6ff, #e6e0fa, #d1c4e9);
+    --lavender-deep: #7e57c2;
+    --lavender-accent: #b39ddb;
+    --text-dark: #2e224f;
+    --card-bg: #ffffff;
+    --success: #43a047;
+    --warn: #fbc02d;
+    --danger: #e53935;
   }
 
-  /* ========================================
-     DARK MODE TOKENS
-     ======================================== */
-  .dark-mode {
-    --bg-primary: #0b1120;
-    --bg-secondary: #111827;
-    --bg-card: #1e293b;
-    --bg-card-hover: #253347;
-    --bg-navbar: #0b1120;
-    --bg-footer: #0b1120;
-
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --text-on-dark: #f8fafc;
-
-    --accent: #38bdf8;
-    --accent-hover: #0ea5e9;
-    --accent-light: rgba(56, 189, 248, 0.1);
-    --accent-glow: rgba(56, 189, 248, 0.12);
-
-    --border: #1e293b;
-    --border-light: #1e293b;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.25);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
-    --shadow-xl: 0 16px 48px rgba(0,0,0,0.35);
-    --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.06);
-  }
-
-  /* ========================================
-     BASE
-     ======================================== */
-  *, *::before, *::after { box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
+  /* Base structure */
   html, body {
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
-    background: var(--bg-primary);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: var(--text-primary);
-    transition: background var(--transition-slow), color var(--transition-slow);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background: var(--lavender-gradient);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    transition: background 0.3s, color 0.3s;
   }
 
-  /* ========================================
-     SCROLLBAR
-     ======================================== */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
-
-  /* ========================================
-     NAVBAR
-     ======================================== */
   .navbar {
-    background: var(--bg-navbar);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 0 24px;
-    height: 60px;
-    z-index: 1100;
+    background-color: var(--lavender-deep);
   }
 
-  .navbar-brand {
-    color: var(--text-on-dark) !important;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+  .navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 600;
   }
 
-  .navbar-brand .logo-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--accent), #6366f1);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 800;
-    color: #fff;
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(126, 87, 194, 0.12);
   }
 
-  .nav-btn {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-sm);
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-  .nav-btn:hover {
-    color: var(--text-on-dark);
-    border-color: rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.05);
-  }
-  .nav-btn-accent {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .nav-btn-accent:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-    color: #fff;
-  }
-
-  /* ========================================
-     ROLE SELECTION
-     ======================================== */
+  /* Role selection */
   #roleSelection {
     flex: 1;
     display: flex;
@@ -191,358 +56,113 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px 20px;
-    min-height: calc(100vh - 60px);
-  }
-
-  .hero-section {
-    margin-bottom: 48px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
-    background: var(--accent-light);
-    color: var(--accent);
-    border-radius: var(--radius-full);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border: 1px solid rgba(14, 165, 233, 0.15);
-  }
-
-  .hero-title {
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: var(--text-primary);
-    margin: 0 0 16px;
-  }
-
-  .hero-title .highlight {
-    background: linear-gradient(135deg, var(--accent), #6366f1);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .hero-subtitle {
-    font-size: 17px;
-    color: var(--text-secondary);
-    font-weight: 400;
-    line-height: 1.6;
-    max-width: 480px;
-    margin: 0 auto;
+    padding: 20px;
   }
 
   .role-selection-row {
     display: flex;
-    gap: 20px;
+    gap: 48px;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 22px;
   }
 
   .role-card {
     cursor: pointer;
-    width: 220px;
-    padding: 32px 24px;
-    border-radius: var(--radius-lg);
+    width: 240px;
+    height: 160px;
+    border-radius: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    transition: all var(--transition-spring);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .role-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), #6366f1);
-    opacity: 0;
-    transition: opacity var(--transition-base);
+    transition: all 0.28s ease;
+    box-shadow: 0 8px 25px rgba(126, 87, 194, 0.14);
+    background: #fff;
   }
 
   .role-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--accent);
-  }
-
-  .role-card:hover::before { opacity: 1; }
-
-  .role-card .role-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    background: var(--bg-secondary);
-    transition: background var(--transition-base);
-  }
-
-  .role-card:hover .role-icon {
-    background: var(--accent-light);
+    transform: scale(1.12);
+    box-shadow: 0 12px 40px rgba(126, 87, 194, 0.28);
   }
 
   .role-card h5 {
-    color: var(--text-primary);
+    color: var(--lavender-deep);
     font-weight: 700;
-    font-size: 16px;
-    margin: 0;
+    margin-bottom: 6px;
   }
 
   .role-card p {
-    color: var(--text-secondary);
+    color: #5c4b91;
     margin: 0;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 0.92rem;
   }
 
-  /* ========================================
-     MAIN INTERFACE
-     ======================================== */
+  /* Main interface */
   #mainInterface {
     flex: 1;
     display: none;
-    padding: 80px 16px 40px;
-    max-width: 840px;
+    padding: 90px 16px 80px;
+    max-width: 920px;
     margin: 0 auto;
-    width: 100%;
   }
 
-  .main-card {
-    background: var(--bg-card);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
-    padding: 32px;
-    transition: box-shadow var(--transition-base);
-  }
-
-  .main-card:hover {
-    box-shadow: var(--shadow-lg);
-  }
-
-  .section-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
+  #mainInterface .card {
+    padding: 22px;
     text-align: center;
-    margin-bottom: 24px;
   }
 
-  /* ========================================
-     FORM
-     ======================================== */
   #predictForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
-  .form-control {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: inherit;
-    font-weight: 400;
-    color: var(--text-primary);
-    transition: all var(--transition-fast);
+  #predictForm .form-control {
+    width: 92%;
+    max-width: 640px;
   }
 
-  .form-control::placeholder {
-    color: var(--text-muted);
+  #predictForm button {
+    width: 92%;
+    max-width: 640px;
   }
 
-  .form-control:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-    background: var(--bg-card);
-  }
-
-  .input-group {
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-  }
-
-  .input-group .input-group-text {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-right: none;
-    color: var(--text-secondary);
-    font-size: 16px;
-    padding: 10px 12px;
-  }
-
-  .input-group .form-control {
-    border-left: none;
-    border-radius: 0;
-  }
-
-  .input-group .form-control:focus {
-    box-shadow: none;
-    border-color: var(--accent);
-  }
-
-  .input-group:focus-within {
-    box-shadow: 0 0 0 3px var(--accent-glow);
-    border-radius: var(--radius-sm);
-  }
-
-  .input-group:focus-within .input-group-text {
-    border-color: var(--accent);
-  }
-
-  .btn-predict {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 10px 28px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-predict::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-  }
-
-  .btn-predict:hover {
-    background: var(--accent-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-  }
-  .btn-predict:hover::after { opacity: 1; }
-
-  .btn-predict:active {
-    transform: translateY(0);
-  }
-
-  .btn-reset {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 28px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-
-  .btn-reset:hover {
-    background: var(--bg-secondary);
-    border-color: var(--text-muted);
-  }
-
-  /* ========================================
-     RESULT AREA
-     ======================================== */
-  #result {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-
-  #result h5 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-
-  #info {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 16px;
+  /* Result area */
+  .chart-container {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 18px;
   }
 
   .progress {
-    height: 8px;
-    border-radius: var(--radius-full);
-    background: var(--bg-secondary);
+    height: 22px;
+    border-radius: 12px;
+    background: #ede7f6;
     overflow: hidden;
-    margin-bottom: 8px;
   }
 
   .progress-bar {
-    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                background-color var(--transition-base);
-    border-radius: var(--radius-full);
+    transition: width 0.8s ease, background-color 0.3s ease;
   }
 
-  #riskLabel {
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--text-primary);
-  }
-
-  .chart-container {
-    background: var(--bg-card);
-    padding: 20px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    margin-top: 16px;
-  }
-
-  .gauge-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 16px;
-  }
-
-  /* ========================================
-     MOLECULAR PROPERTIES
-     ======================================== */
+  /* Molecular properties */
   #molPropsCard {
     display: none;
     margin: 20px auto;
-    width: 100%;
-    padding: 24px;
-    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 720px;
+    padding: 22px;
+    border-radius: 16px;
     text-align: center;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
   }
 
   #molPropsCard h5 {
-    color: var(--text-primary);
-    margin-bottom: 16px;
-    font-size: 16px;
-    font-weight: 700;
+    color: var(--lavender-deep);
+    margin-bottom: 12px;
+    font-size: 1.2rem;
   }
 
   #molPropsList {
@@ -550,400 +170,108 @@
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
 
   #molPropsList li {
-    min-width: 100px;
-    color: var(--text-primary);
+    min-width: 120px;
+    color: #3f2a6d;
     font-weight: 600;
-    padding: 10px 14px;
-    background: var(--bg-secondary);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    font-size: 13px;
-    transition: all var(--transition-fast);
+    padding: 6px 10px;
+    background: #fbf8ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(126, 87, 194, 0.06);
   }
 
-  #molPropsList li:hover {
-    border-color: var(--accent);
-    background: var(--accent-light);
-  }
-
-  #molPropsList li b {
-    display: block;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-    font-weight: 600;
-  }
-
-  /* ========================================
-     MOLECULE & ALTERNATIVES CARDS
-     ======================================== */
-  #moleculeCard,
-  #alternativesCard {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-
-  #moleculeCard h5,
-  #alternativesCard h5 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  #moleculeCard img {
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    transition: transform var(--transition-base);
-  }
-
-  #moleculeCard img:hover {
-    transform: scale(1.03);
-  }
-
-  .list-group-item {
-    background: var(--bg-card);
-    border-color: var(--border);
-    color: var(--text-primary);
-    padding: 12px 16px;
-    transition: background var(--transition-fast);
-  }
-
-  .list-group-item:hover {
-    background: var(--bg-secondary);
-  }
-
-  .list-group-item strong {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
-
-  .list-group-item small {
-    color: var(--text-secondary);
-  }
-
-  /* ========================================
-     SCANNER
-     ======================================== */
-  .scan-controls {
+  /* Risk gauge */
+  .gauge-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 16px;
-  }
-
-  .btn-scan {
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-
-  .btn-scan:hover {
-    background: var(--accent-light);
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  #quickRiskBadge { margin-left: 4px; }
-
-  .badge {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: var(--radius-full);
-  }
-
-  /* ========================================
-     MIC BUTTONS
-     ======================================== */
-  #micDrug, #micGene {
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-left: none;
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    width: 42px;
-    height: auto;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
+    align-items: center;
+    margin-top: 10px;
   }
 
-  #micDrug:hover, #micGene:hover {
-    background: var(--accent-light);
-    color: var(--accent);
-  }
-
-  #micDrug.listening, #micGene.listening {
-    animation: mic-pulse 1.2s infinite;
-    background: var(--accent-light);
-    color: var(--accent);
-  }
-
-  @keyframes mic-pulse {
-    0% { box-shadow: 0 0 0 0 var(--accent-glow); }
-    70% { box-shadow: 0 0 0 10px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-
-  /* ========================================
-     MODAL
-     ======================================== */
-  .modal {
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-  }
-
-  .modal-content {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    overflow: hidden;
-  }
-
-  .modal-header {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px;
-  }
-
-  .modal-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .modal-body {
-    padding: 20px;
-    color: var(--text-secondary);
-  }
-
-  .modal-footer {
-    border-top: 1px solid var(--border);
-    padding: 12px 20px;
-  }
-
-  .modal-dialog { max-width: 420px; }
-
-  /* ========================================
-     RECENT ACTIVITIES
-     ======================================== */
-  #recentActivities .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-
-  #recentActivities h5 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  #recentList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  #recentList li {
-    padding: 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-    border-bottom: 1px solid var(--border-light);
-  }
-
-  #recentList li:last-child { border-bottom: none; }
-
-  /* ========================================
-     CHATBOT
-     ======================================== */
+  /* Chatbot */
   .chatbot-btn {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: var(--radius-full);
-    width: 52px;
-    height: 52px;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--lavender-deep);
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 28px;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35);
+    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.28);
     z-index: 1200;
-    border: none;
-    transition: all var(--transition-spring);
-  }
-
-  .chatbot-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 28px rgba(14, 165, 233, 0.45);
   }
 
   .chat-window {
     display: none;
     position: fixed;
-    bottom: 88px;
-    right: 24px;
-    width: 340px;
-    height: 440px;
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-xl);
+    bottom: 100px;
+    right: 30px;
+    width: 320px;
+    height: 420px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(126, 87, 194, 0.28);
     overflow: hidden;
     flex-direction: column;
     z-index: 1200;
-    animation: chat-slide-up 0.3s ease;
-  }
-
-  @keyframes chat-slide-up {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .chat-header {
-    background: var(--bg-navbar);
-    color: var(--text-on-dark);
-    padding: 14px 16px;
+    background: var(--lavender-deep);
+    color: white;
+    padding: 10px;
     font-weight: 700;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .chat-header-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--success);
-    animation: chat-dot-pulse 2s infinite;
-  }
-
-  @keyframes chat-dot-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    text-align: center;
   }
 
   .chat-body {
     flex: 1;
-    padding: 14px;
+    padding: 10px;
     overflow-y: auto;
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .chat-body p {
-    margin-bottom: 8px;
-  }
-
-  .chat-body b {
-    color: var(--text-primary);
+    font-size: 0.9rem;
   }
 
   .chat-input {
     display: flex;
     gap: 8px;
-    padding: 12px;
-    border-top: 1px solid var(--border);
+    padding: 10px;
+    border-top: 1px solid #eee;
   }
 
   .chat-input input {
     flex: 1;
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    font-size: 13px;
-    font-family: inherit;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    transition: border-color var(--transition-fast);
-  }
-
-  .chat-input input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-
-  .chat-input button {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: background var(--transition-fast);
-  }
-
-  .chat-input button:hover {
-    background: var(--accent-hover);
+    border-radius: 8px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
   }
 
   .chat-quick {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
-    padding: 8px 12px;
-    border-top: 1px solid var(--border);
+    padding: 8px;
   }
 
-  .chat-quick button {
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-full);
-    padding: 4px 12px;
-    font-size: 12px;
-    font-family: inherit;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-
-  .chat-quick button:hover {
-    background: var(--accent-light);
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  /* ========================================
-     FOOTER
-     ======================================== */
+  /* Footer — updated and fixed */
   .footer {
-    background: var(--bg-footer);
-    color: var(--text-on-dark);
+    background: #f4f0ff;
+    border-top: 3px solid var(--lavender-accent);
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
     margin-top: auto;
     width: 100%;
+    box-shadow: 0 -2px 10px rgba(126, 87, 194, 0.1);
   }
 
   .footer-content {
@@ -951,228 +279,183 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 40px;
-    padding: 40px 24px 30px;
-    max-width: 1100px;
-    margin: 0 auto;
-    align-items: flex-start;
+    padding: 35px 20px 25px;
+    align-items: center;
   }
 
   .footer-logo {
     flex: 1 1 260px;
-  }
-
-  .footer-logo .logo-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .footer-logo .logo-row .logo-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--accent), #6366f1);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
+    text-align: center;
   }
 
   .footer-logo h4 {
-    color: #fff;
+    color: var(--lavender-deep);
     font-weight: 700;
-    font-size: 16px;
-    margin: 0;
+    margin-top: 8px;
   }
 
   .footer-logo p {
-    color: #94a3b8;
-    font-size: 13px;
-    margin: 0;
-    line-height: 1.6;
-    max-width: 300px;
+    color: #6b5b95;
+    font-size: 0.92rem;
+    margin: 6px 0 0;
   }
 
   .footer-links, .footer-connect {
-    flex: 1 1 140px;
+    flex: 1 1 220px;
   }
 
   .footer-links h5, .footer-connect h5 {
     font-weight: 600;
-    color: #fff;
-    margin-bottom: 12px;
-    font-size: 14px;
+    color: var(--lavender-deep);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--lavender-accent);
+    display: inline-block;
+    padding-bottom: 4px;
   }
 
   .footer-links a, .footer-connect a {
-    color: #94a3b8;
+    color: #5c4b91;
     text-decoration: none;
-    font-size: 13px;
-    transition: color var(--transition-fast);
-    display: block;
-    padding: 3px 0;
+    transition: color 0.2s ease;
   }
 
   .footer-links a:hover, .footer-connect a:hover {
-    color: var(--accent);
+    color: var(--lavender-deep);
+    text-decoration: underline;
   }
 
   .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
+    background: var(--lavender-deep);
+    color: #fff;
     text-align: center;
-    padding: 16px;
-    font-size: 13px;
-    color: #64748b;
+    padding: 14px 10px;
+    font-size: 0.9rem;
   }
 
-  /* ========================================
-     BACK TO TOP
-     ======================================== */
+  /* Back to top */
   #toTop {
     position: fixed;
-    right: 24px;
-    bottom: 88px;
-    background: var(--bg-card);
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
+    right: 22px;
+    bottom: 95px;
+    background: var(--lavender-deep);
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-    font-size: 16px;
-    transition: all var(--transition-fast);
-    z-index: 1100;
+    box-shadow: 0 6px 18px rgba(126, 87, 194, 0.3);
+    border: none;
   }
 
-  #toTop:hover {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* ========================================
-     ANIMATIONS
-     ======================================== */
+  /* Animation */
   .fade-in {
-    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: fadeIn 0.9s ease both;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: none; }
   }
 
-  .slide-up {
-    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  /* Dark mode */
+  .dark-mode {
+    background: #0f0f11 !important;
+    color: #e7e3ff !important;
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: none; }
+  .dark-mode .card,
+  .dark-mode .navbar,
+  .dark-mode .modal-content {
+    background: #141418 !important;
+    color: #fff !important;
   }
 
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-
-  /* ========================================
-     RESEARCHER NOTES
-     ======================================== */
-  #researcherNotes {
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    resize: vertical;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-    font-family: inherit;
-    font-size: 14px;
-    color: var(--text-primary);
+  .dark-mode .form-control {
+    background: #1e1e24;
+    color: #fff;
+    border: 1px solid #333;
   }
 
-  #researcherNotes:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-    outline: none;
-    background: var(--bg-card);
-  }
-
-  /* ========================================
-     TOAST
-     ======================================== */
-  .toast {
-    border-radius: var(--radius-sm) !important;
-    font-family: inherit !important;
-    font-size: 13px !important;
-    box-shadow: var(--shadow-lg) !important;
-    border: none !important;
-  }
-
-  /* ========================================
-     RESPONSIVE
-     ======================================== */
+  /* Responsive tweaks */
   @media (max-width: 640px) {
-    .hero-title { font-size: 28px !important; }
-
-    .role-card {
-      width: 100% !important;
-      max-width: 320px;
-      padding: 24px;
+    .brand-text {
+      font-size: 2rem !important;
     }
 
-    .role-selection-row {
-      flex-direction: column;
-      align-items: center;
+    .role-card {
+      width: 90% !important;
+      height: auto;
+      padding: 20px;
     }
 
     .footer-content {
       flex-direction: column;
       text-align: center;
     }
-
-    .footer-logo p { margin: 0 auto; }
-
-    #mainInterface { padding: 72px 12px 24px; }
-
-    .main-card { padding: 20px; }
-
-    .chat-window {
-      width: calc(100vw - 32px);
-      right: 16px;
-      bottom: 80px;
-    }
-
-    .nav-btn { padding: 5px 10px; font-size: 12px; }
   }
 
-  /* ========================================
-     LOADING SPINNER
-     ======================================== */
-  .loading-dots {
-    display: inline-flex;
-    gap: 4px;
-  }
-  .loading-dots span {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: bounce-dot 1.2s infinite ease-in-out;
-  }
-  .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
-  .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+  /* Researcher notes box */
+#researcherNotes {
+  border-radius: 10px;
+  border: 1px solid #d1c4e9;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-  @keyframes bounce-dot {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-    40% { transform: scale(1); opacity: 1; }
-  }
+#researcherNotes:focus {
+  border-color: var(--lavender-deep);
+  box-shadow: 0 0 8px rgba(126, 87, 194, 0.3);
+  outline: none;
+}
+
+/* -------------------------------
+   Mic Buttons Styling
+   ------------------------------- */
+#micDrug, #micGene {
+  background-color: #f3e8ff;
+  color: #5a189a;
+  border: 1px solid #cbb5f5;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(90, 24, 154, 0.1);
+}
+
+#micDrug:hover, #micGene:hover {
+  background-color: #d0b3ff;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(90, 24, 154, 0.25);
+}
+
+#micDrug.listening, #micGene.listening {
+  animation: pulse 1s infinite;
+  background-color: #d1c4e9;
+  color: white;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(106, 27, 154, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
+}
+
+/* Scanner & Molecule UI Styling */
+#moleculeCard img { border: 2px solid #eee; background: #fafafa; transition: transform 0.3s; }
+#moleculeCard img:hover { transform: scale(1.05); }
+#quickRiskBadge { margin-left: 8px; }
+.modal-dialog { max-width: 420px; }
+
+
 </style>
 
 </head>
@@ -1180,79 +463,78 @@
 <body>
   <!-- NAV -->
   <nav class="navbar fixed-top">
-    <div class="container-fluid px-3 d-flex align-items-center justify-content-between" style="height:60px;">
-      <a class="navbar-brand" href="#" onclick="goHome()">
-        <span class="logo-icon">M</span>
-        <span>MedShield AI</span>
-      </a>
+    <div class="container-fluid px-4">
+      <div class="d-flex align-items-center gap-3">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#" onclick="goHome()">
+          <span style="font-size:22px">🧬</span>
+          <span style="font-size:18px; font-weight:800">MedShield AI</span>
+        </a>
+      </div>
 
       <div class="d-flex align-items-center gap-2">
-        <button id="homeBtn" class="nav-btn" onclick="goHome()">Home</button>
-        <button id="darkModeToggle" class="nav-btn">Dark</button>
-        <button id="reportDownloadBtn" class="nav-btn nav-btn-accent">Download Report</button>
+        <button id="homeBtn" class="btn btn-sm btn-outline-light me-2" onclick="goHome()">Home</button>
+        <button id="darkModeToggle" class="btn btn-sm btn-outline-light me-2">🌙 Dark</button>
+        <button id="reportDownloadBtn" class="btn btn-sm btn-light" style="color: var(--lavender-deep); font-weight:600;">Download Report</button>
       </div>
     </div>
   </nav>
 
   <!-- ROLE SELECTION -->
   <div id="roleSelection" class="fade-in">
-    <div class="hero-section">
-      <div class="hero-badge">AI-Powered Drug Safety</div>
-      <h1 class="hero-title">
-        Predict Drug-Gene<br><span class="highlight">Risk Interactions</span>
-      </h1>
-      <p class="hero-subtitle">
-        Access tailored tools for Patients, Doctors, and Researchers.
-        Powered by machine learning and pharmacogenomics.
-      </p>
+    <div class="text-center mb-5">
+      <div class="brand-logo" style="display:flex; align-items:center; gap:12px; justify-content:center;">
+        <div style="font-size:42px; background:linear-gradient(135deg,#ff6ec4,#7873f5); -webkit-background-clip:text; background-clip:text; color:transparent;">🧬</div>
+        <h1 class="brand-text" style="font-size:36px; font-weight:800; margin:0; background:linear-gradient(135deg,#6a1b9a,#9575cd); -webkit-background-clip:text; color:transparent;">MedShield AI</h1>
+      </div>
+
+      <h2 class="fw-bold mt-3" style="color:var(--lavender-deep);">Select Your Role</h2>
+      <p class="text-muted">Access tailored tools for Patients, Doctors, and Researchers.</p>
     </div>
 
     <div class="role-selection-row">
-      <div class="role-card slide-up stagger-1" onclick="selectRole('patient')">
-        <div class="role-icon">&#x1F9CD;</div>
-        <h5>Patient</h5>
+      <div class="role-card" onclick="selectRole('patient')">
+        <h5>🧍 Patient</h5>
         <p>Personalized health tracking</p>
       </div>
 
-      <div class="role-card slide-up stagger-2" onclick="selectRole('doctor')">
-        <div class="role-icon">&#x1F468;&#x200D;&#x2695;&#xFE0F;</div>
-        <h5>Doctor</h5>
+      <div class="role-card" onclick="selectRole('doctor')">
+        <h5>👨‍⚕️ Doctor</h5>
         <p>Patient risk predictions</p>
       </div>
 
-      <div class="role-card slide-up stagger-3" onclick="selectRole('researcher')">
-        <div class="role-icon">&#x1F9E0;</div>
-        <h5>Researcher</h5>
+      <div class="role-card" onclick="selectRole('researcher')">
+        <h5>🧠 Researcher</h5>
         <p>Genetic data analysis</p>
       </div>
     </div>
   </div>
 
   <!-- MAIN INTERFACE -->
-  <div id="mainInterface" class="container fade-in" style="display:none; max-width:840px;">
-    <div class="main-card">
-      <h3 id="headerTitle" class="section-title"></h3>
+  <div id="mainInterface" class="container fade-in" style="display:none; max-width:980px;">
+    <div class="card p-4">
+      <h3 id="headerTitle" class="text-center mb-3"></h3>
 
       <form id="predictForm" class="mb-2">
         <div id="roleFields"></div>
 
         <!-- Drug input with mic -->
         <div class="input-group mb-2 mx-auto" style="width:92%; max-width:640px;">
-          <span class="input-group-text">&#x1F48A;</span>
+          <span class="input-group-text">💊</span>
           <input type="text" id="drug" class="form-control" placeholder="Drug name (e.g. Warfarin)" required>
-          <button class="btn" type="button" id="micDrug" title="Speak drug name">&#x1F399;&#xFE0F;</button>
+          <button class="btn" type="button" id="micDrug" title="Speak drug name">🎙️</button>
         </div>
 
         <!-- Gene input with mic -->
         <div class="input-group mb-2 mx-auto" style="width:92%; max-width:640px;">
-          <span class="input-group-text">&#x1F9EC;</span>
+          <span class="input-group-text">🧬</span>
           <input type="text" id="gene" class="form-control" placeholder="Gene name (optional)">
-          <button class="btn" type="button" id="micGene" title="Speak gene name">&#x1F399;&#xFE0F;</button>
+          <button class="btn" type="button" id="micGene" title="Speak gene name">🎙️</button>
         </div>
 
-        <div class="d-flex gap-2 justify-content-center mt-3" style="width:100%">
-          <button type="submit" class="btn-predict">Predict Risk</button>
-          <button id="resetBtn" type="button" class="btn-reset" onclick="resetForm()">Reset</button>
+
+        <div class="d-flex gap-2 justify-content-center mt-2" style="width:100%">
+          <button type="submit" class="btn btn-primary">Predict Risk</button>
+          <button id="resetBtn" type="button" class="btn btn-outline-secondary" onclick="resetForm()">Reset</button>
         </div>
       </form>
 
@@ -1264,7 +546,7 @@
         <div class="progress mb-2">
           <div id="riskBar" class="progress-bar" style="width:0%;"></div>
         </div>
-        <div id="riskLabel"></div>
+        <div id="riskLabel" style="font-weight:700; color:var(--lavender-deep);"></div>
 
         <!-- Gauge + charts -->
         <div class="d-flex flex-column align-items-center mt-3">
@@ -1280,119 +562,114 @@
             <canvas id="summaryPie" style="max-height:260px"></canvas>
           </div>
         </div>
+
       </div>
 
       <!-- Molecular properties card -->
-      <div id="molPropsCard" class="mt-3">
+      <div id="molPropsCard" class="card mt-3">
         <h5 class="mb-2">Molecular Properties</h5>
         <ul id="molPropsList"></ul>
       </div>
 
-      <!-- Molecule Structure Display -->
-      <div id="moleculeCard" class="card mt-3 p-3" style="display:none;">
-        <h5 class="mb-2">Molecule Structure</h5>
-        <div class="text-center">
-          <img id="moleculeImage" src="" alt="Molecule Image"
-              class="img-fluid rounded"
-              style="max-height:280px;"/>
-        </div>
-      </div>
+<!-- Molecule Structure Display -->
+  <div id="moleculeCard" class="card mt-3 p-3" style="display:none;">
+    <h5 class="mb-2">🧬 Molecule Structure</h5>
+    <div class="text-center">
+      <img id="moleculeImage" src="" alt="Molecule Image"
+          class="img-fluid rounded shadow-sm"
+          style="max-height:280px;"/>
+    </div>
+  </div>
 
-      <!-- AI Suggested Alternatives -->
-      <div id="alternativesCard" class="card mt-3 p-3" style="display:none;">
-        <h5 class="mb-2">Safer Drug Alternatives</h5>
-        <ul id="alternativesList" class="list-group list-group-flush"></ul>
-      </div>
+<!-- AI Suggested Alternatives -->
+<div id="alternativesCard" class="card mt-3 p-3" style="display:none;">
+  <h5 class="mb-2">💡 Safer Drug Alternatives</h5>
+  <ul id="alternativesList" class="list-group list-group-flush"></ul>
+</div>
 
-      <!-- Scanner Controls -->
-      <div class="scan-controls">
-        <button id="openScannerBtn" class="btn-scan">Scan Drug Barcode / QR</button>
-        <div id="quickRiskBadge" style="display:none;">
-          <span id="riskBadge" class="badge rounded-pill"></span>
-        </div>
-      </div>
+<!-- Quick Scanner Controls -->
+<div class="d-flex align-items-center gap-2 mt-3">
+  <button id="openScannerBtn" class="btn btn-outline-primary btn-sm">🔍 Scan Drug Barcode / QR</button>
+  <div id="quickRiskBadge" style="display:none;">
+    <span id="riskBadge" class="badge rounded-pill"></span>
+  </div>
+</div>
 
-      <!-- Scanner Modal -->
-      <div id="scannerModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Scan Drug Barcode / QR</h5>
-              <button type="button" class="btn-close" id="closeScannerBtn" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-              <video id="scannerVideo" autoplay playsinline style="width:100%; max-height:360px; background:#000; border-radius:8px;"></video>
-              <p class="small mt-2" style="color:var(--text-muted);">
-                Point your camera at the barcode or QR code on the package.
-              </p>
-              <div id="scannerStatus" class="small" style="color:var(--text-muted);">Waiting for code...</div>
-            </div>
-            <div class="modal-footer">
-              <button id="manualEntryBtn" class="btn btn-link" style="color:var(--accent);font-size:13px;">Enter drug name manually</button>
-              <button id="stopScannerBtn" class="btn-reset" style="padding:6px 16px;">Stop</button>
-            </div>
-          </div>
-        </div>
+<!-- Scanner Modal -->
+<div id="scannerModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scan Drug Barcode / QR</h5>
+        <button type="button" class="btn-close" id="closeScannerBtn" aria-label="Close"></button>
       </div>
+      <div class="modal-body text-center">
+        <video id="scannerVideo" autoplay playsinline style="width:100%; max-height:360px; background:#000;"></video>
+        <p class="small text-muted mt-2">
+          Point your camera at the barcode or QR code on the package.
+        </p>
+        <div id="scannerStatus" class="small text-muted">Waiting for code...</div>
+      </div>
+      <div class="modal-footer">
+        <button id="manualEntryBtn" class="btn btn-link">Enter drug name manually</button>
+        <button id="stopScannerBtn" class="btn btn-secondary">Stop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     </div>
 
     <!-- Recent Activities -->
     <div id="recentActivities" class="mt-4" style="display:none;">
       <div class="card p-3">
-        <h5>Recent Activities</h5>
+        <h5>🕒 Recent Activities</h5>
         <ul id="recentList" class="mb-0"></ul>
       </div>
     </div>
   </div>
 
   <!-- Chatbot -->
-  <button class="chatbot-btn" onclick="toggleChat()" aria-label="Open chat assistant">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
-  </button>
+  <div class="chatbot-btn" onclick="toggleChat()">💬</div>
 
   <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <span class="chat-header-dot"></span>
-      MedBot Assistant
-    </div>
+    <div class="chat-header">MedBot Assistant</div>
     <div class="chat-body" id="chatBody">
-      <p><b>MedBot:</b> Hello! Ask me about your medication or genetic risks.</p>
+      <p><b>🤖:</b> Hello! Ask me about your medication or genetic risks.</p>
     </div>
 
-    <div class="chat-quick">
-      <button onclick="quickChat('What is Warfarin risk?')">Warfarin</button>
-      <button onclick="quickChat('Show me CYP2C9')">CYP2C9</button>
-      <button onclick="quickChat('How to reduce risk?')">Reduce risk</button>
+    <div class="chat-quick p-2">
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('What is Warfarin risk?')">Warfarin</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('Show me CYP2C9')">CYP2C9</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="quickChat('How to reduce risk?')">Reduce risk</button>
     </div>
 
     <div class="chat-input">
       <input id="chatInput" placeholder="Type a question..." />
-      <button onclick="sendChat()">Send</button>
+      <button class="btn" onclick="sendChat()" style="background:var(--lavender-deep); color:white;">Send</button>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
+  <footer class="footer mt-5">
+    <div class="footer-content container">
       <div class="footer-logo">
-        <div class="logo-row">
-          <span class="logo-icon">M</span>
-          <h4>MedShield AI</h4>
-        </div>
-        <p>Empowering safer prescriptions through AI-driven drug-gene insights.</p>
+        <div style="font-size:34px">🧬</div>
+        <h4 style="margin:6px 0 4px; color:var(--lavender-deep)">MedShield AI</h4>
+        <p style="color:#6b5b95; margin:0;">Empowering safer prescriptions through AI-driven drug–gene insights.</p>
       </div>
 
       <div class="footer-links">
-        <h5>More</h5>
+        <h5 style="color:var(--lavender-deep);">More</h5>
         <ul style="list-style:none; padding:0; margin:0;">
           <li><a href="#" onclick="goHome()">Home</a></li>
-          <li><a href="#" onclick="alert('About: MedShield AI')">About</a></li>
+          <li><a href="#" onclick="alert('About: MedShield AI — demo')">About</a></li>
           <li><a href="#" onclick="alert('Contact form coming soon')">Contact</a></li>
         </ul>
       </div>
 
       <div class="footer-connect">
-        <h5>Connect</h5>
+        <h5 style="color:var(--lavender-deep);">Connect</h5>
         <ul style="list-style:none; padding:0; margin:0;">
           <li><a href="#" target="_blank">LinkedIn</a></li>
           <li><a href="#" target="_blank">GitHub</a></li>
@@ -1401,16 +678,14 @@
     </div>
 
     <div class="footer-bottom">
-      <p style="margin:0;">2025 MedShield AI. All rights reserved.</p>
+      <p style="margin:0;">© 2025 MedShield AI • Privacy Policy • Designed with 💜</p>
     </div>
   </footer>
 
-  <button id="toTop" title="Back to top" aria-label="Back to top">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
+  <button id="toTop" title="Back to top">↑</button>
 
-  <!-- Toast container -->
-  <div id="toastContainer" style="position:fixed; top:72px; right:20px; z-index:1500;"></div>
+  <!-- Toast container for errors / notifications -->
+  <div id="toastContainer" style="position:fixed; top:100px; right:20px; z-index:1500;"></div>
 
 <script>
 /* -------------------------------
@@ -1438,6 +713,7 @@ function goHome(){
   role = "";
   document.getElementById('mainInterface').style.display = 'none';
   document.getElementById('roleSelection').style.display = 'flex';
+  // clear some UI:
   document.getElementById('result').style.display = 'none';
   document.getElementById('molPropsCard').style.display = 'none';
 }
@@ -1453,36 +729,38 @@ function selectRole(r){
   const fields = document.getElementById('roleFields');
 
   if(r === 'patient'){
-    header.textContent = 'Patient Portal';
+    header.innerHTML = '🧍 Patient Portal';
     fields.innerHTML = `
-      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2 mb-2">
+      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2">
         <input id="name" class="form-control" placeholder="Your name" />
         <input id="age" type="number" class="form-control" placeholder="Age" style="max-width:100px"/>
       </div>`;
     document.getElementById('recentActivities').style.display = 'block';
   } else if(r === 'doctor'){
-    header.textContent = 'Doctor Dashboard';
+    header.innerHTML = '👨‍⚕️ Doctor Dashboard';
     fields.innerHTML = `
-      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2 mb-2">
+      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2">
         <input id="doctorName" class="form-control" placeholder="Doctor name" />
         <input id="hospital" class="form-control" placeholder="Hospital" />
       </div>
     `;
     document.getElementById('recentActivities').style.display = 'none';
   } else {
-    header.textContent = 'Researcher Portal';
-    fields.innerHTML = `
-      <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2 mb-2">
-        <input id="researcherName" class="form-control" placeholder="Researcher name" />
-        <input id="study" class="form-control" placeholder="Study / Dataset" />
-      </div>
-      <div style="width:92%; max-width:640px; margin:0 auto;">
-        <textarea id="researcherNotes" class="form-control" rows="3"
-          placeholder="Add any notes about the drug or gene prediction context..."></textarea>
-      </div>
-    `;
-    document.getElementById('recentActivities').style.display = 'none';
-  }
+  header.innerHTML = '🧠 Researcher Portal';
+  fields.innerHTML = `
+    <div style="width:92%; max-width:640px; margin:0 auto;" class="d-flex gap-2 mb-2">
+      <input id="researcherName" class="form-control" placeholder="Researcher name" />
+      <input id="study" class="form-control" placeholder="Study / Dataset" />
+    </div>
+
+    <div style="width:92%; max-width:640px; margin:0 auto;">
+      <textarea id="researcherNotes" class="form-control" rows="3"
+        placeholder="Add any notes you know about the drug or gene prediction context..."></textarea>
+    </div>
+  `;
+  document.getElementById('recentActivities').style.display = 'none';
+}
+
 }
 
 /* -------------------------------
@@ -1517,133 +795,94 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
   }
 
   try {
-    showToast('Analyzing...', 'info', 1200);
+    // show brief UI feedback
+    showToast('Analyzing... (simulated)', 'info', 1200);
 
     const result = await predictDrug(drug, gene);
-    lastResult = result;
+    lastResult = result; // keep for report download
 
+    // overall risk
     const risk = result.overall_risk || 'Low';
-    const color = risk === 'High' ? '#ef4444'
-                : risk === 'Medium' ? '#f59e0b'
-                : '#10b981';
+    const color = risk === 'High' ? getComputedStyle(document.documentElement).getPropertyValue('--danger').trim() || '#e53935'
+                : risk === 'Medium' ? getComputedStyle(document.documentElement).getPropertyValue('--warn').trim() || '#fbc02d'
+                : getComputedStyle(document.documentElement).getPropertyValue('--success').trim() || '#43a047';
     const percent = risk === 'High' ? 90 : risk === 'Medium' ? 60 : 30;
 
+    // update progress bar + text
     const bar = document.getElementById('riskBar');
     bar.style.width = percent + '%';
     bar.style.backgroundColor = color;
-    document.getElementById('riskLabel').textContent = `${risk} Risk (${percent}%)`;
-    document.getElementById('info').innerHTML = `<b>Drug:</b> ${result.drug} &mdash; <span style="color:var(--text-muted)">${result.role || role}</span>`;
+    document.getElementById('riskLabel').textContent = `${risk} Risk (${(percent)}%)`;
+    document.getElementById('info').innerHTML = `<b>Drug:</b> ${result.drug} — <small style="color:#6b5b95">${result.role || role}</small>`;
 
+    // show result block
     document.getElementById('result').style.display = 'block';
 
-    // Build bar chart
+    // build bar chart (gene-level)
     if(result.rows && result.rows.length){
       const labels = result.rows.map(r => r.gene);
       const scores = result.rows.map(r => (r.score===null?0:r.score));
-      const colors = result.rows.map(r => r.color || 'var(--accent)');
+      const colors = result.rows.map(r => r.color || '#7e57c2');
 
+      // destroy previous
       if(chart) chart.destroy();
-
-      const isDark = document.body.classList.contains('dark-mode');
-      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-      const tickColor = isDark ? '#94a3b8' : '#475569';
 
       const ctx = document.getElementById('geneChart').getContext('2d');
       chart = new Chart(ctx, {
         type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            label: `${result.drug} Predicted Affinity`,
-            data: scores,
-            backgroundColor: colors,
-            borderRadius: 6,
-            barThickness: 32
-          }]
-        },
+        data: { labels, datasets: [{ label: `${result.drug} Predicted Affinity`, data: scores, backgroundColor: colors, borderRadius:6, barThickness: 36 }] },
         options: {
           responsive: true,
-          animation: { duration: 1000, easing: 'easeOutCubic' },
-          interaction: { mode: 'nearest', axis: 'x', intersect: true },
+          animation:{duration:900, easing:'easeOutCubic'},
+          interaction: { mode:'nearest', axis:'x', intersect:true },
           scales: {
-            y: {
-              beginAtZero: true,
-              max: 1,
-              ticks: { color: tickColor, font: { family: 'Inter', size: 12 } },
-              grid: { color: gridColor }
-            },
-            x: {
-              ticks: { color: tickColor, font: { family: 'Inter', size: 12 } },
-              grid: { display: false }
-            }
+            y: { beginAtZero:true, max:1, ticks:{ color:'#5e35b1' } },
+            x: { ticks:{ color:'#5e35b1' } }
           },
           plugins: {
             tooltip: {
-              backgroundColor: isDark ? '#1e293b' : '#0f172a',
-              titleFont: { family: 'Inter', weight: '600' },
-              bodyFont: { family: 'Inter' },
-              cornerRadius: 8,
-              padding: 12,
               callbacks: {
                 label: ctx => {
                   const v = ctx.raw;
                   const r = result.rows[ctx.dataIndex];
-                  return `${r.gene}: ${v} - risk: ${r.risk}`;
+                  return `${r.gene}: ${v} — risk: ${r.risk}`;
                 }
               }
             },
-            legend: { display: false },
-            title: {
-              display: true,
-              text: 'Predicted Gene Affinities',
-              color: tickColor,
-              font: { size: 14, weight: '700', family: 'Inter' },
-              padding: { bottom: 16 }
-            }
+            legend: { display:false },
+            title: { display:true, text:'Predicted Gene Affinities', color:'#4a148c', font:{size:15, weight:'700'} }
+          },
+          onHover: (evt, activeEls) => {
+            evt.native && (evt.native.target.style.cursor = activeEls && activeEls.length ? 'pointer' : 'default');
           }
         }
       });
 
-      // Pie chart
+      // build pie summary
       const labelsPie = result.rows.map(r => r.gene);
       const dataPie = result.rows.map(r => Math.round((r.score||0)*100));
-      const colorsPie = result.rows.map(r => r.color || 'var(--accent)');
+      const colorsPie = result.rows.map(r => r.color || '#7e57c2');
 
       if(pie) pie.destroy();
       const pctx = document.getElementById('summaryPie').getContext('2d');
       pie = new Chart(pctx, {
         type: 'doughnut',
-        data: {
-          labels: labelsPie,
-          datasets: [{ data: dataPie, backgroundColor: colorsPie, borderWidth: 0 }]
-        },
-        options: {
-          responsive: true,
-          cutout: '60%',
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: tickColor,
-                font: { family: 'Inter', size: 12 },
-                padding: 16,
-                usePointStyle: true,
-                pointStyleWidth: 10
-              }
-            }
-          }
-        }
+        data: { labels: labelsPie, datasets:[{ data: dataPie, backgroundColor: colorsPie }] },
+        options: { responsive:true, plugins:{ legend:{ position:'bottom' } } }
       });
 
       document.getElementById('pieWrap').style.display = 'block';
     } else {
+      // no rows
       if(chart) { chart.destroy(); chart = null; }
       document.getElementById('pieWrap').style.display = 'none';
     }
 
+    // update circular gauge & molecular props
     updateGauge(percent, color);
     displayMolProps(result.props || {});
 
+    // track recent for patient
     if(role === 'patient') addRecent(result.drug);
 
   } catch(err) {
@@ -1662,21 +901,29 @@ function updateGauge(percent, color) {
   const cx = canvas.width/2, cy = canvas.height/2, rad = size*0.36;
   ctx.clearRect(0,0,canvas.width, canvas.height);
 
-  const isDark = document.body.classList.contains('dark-mode');
-  const bgRing = isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9';
-  const textColor = isDark ? '#f1f5f9' : '#0f172a';
+  // background ring
+  ctx.beginPath();
+  ctx.arc(cx,cy,rad,0,2*Math.PI);
+  ctx.lineWidth = 14;
+  ctx.strokeStyle = '#efe8ff';
+  ctx.stroke();
 
+  // animated foreground arc
   let start = -Math.PI/2;
   let to = start + (percent/100) * 2 * Math.PI;
 
-  const steps = 50; let i=0;
+  // simple animation:
+  const steps = 40; let i=0;
   const animate = () => {
     i++;
     const cur = start + (i/steps)*(to-start);
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.beginPath(); ctx.arc(cx,cy,rad,0,2*Math.PI); ctx.lineWidth=12; ctx.strokeStyle=bgRing; ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx,cy,rad,start,cur); ctx.lineWidth=12; ctx.strokeStyle=color; ctx.lineCap='round'; ctx.stroke();
-    ctx.fillStyle = textColor; ctx.font = '700 18px Inter'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    // bg
+    ctx.beginPath(); ctx.arc(cx,cy,rad,0,2*Math.PI); ctx.lineWidth=14; ctx.strokeStyle='#efe8ff'; ctx.stroke();
+    // foreground
+    ctx.beginPath(); ctx.arc(cx,cy,rad,start,cur); ctx.lineWidth=14; ctx.strokeStyle=color; ctx.lineCap='round'; ctx.stroke();
+    // inner label
+    ctx.fillStyle = '#4a148c'; ctx.font = '700 18px Poppins'; ctx.textAlign='center'; ctx.textBaseline='middle';
     const val = Math.round(((i/steps)*(percent)));
     ctx.fillText(val + '%', cx, cy);
     if(i < steps) requestAnimationFrame(animate);
@@ -1692,12 +939,12 @@ function displayMolProps(props){
   const molList = document.getElementById('molPropsList');
   if(props && Object.keys(props).length){
     molList.innerHTML = `
-      <li><b>MolWt</b><div>${props.MolWt ?? '\u2014'}</div></li>
-      <li><b>LogP</b><div>${props.LogP ?? '\u2014'}</div></li>
-      <li><b>HBA</b><div>${props.HBA ?? '\u2014'}</div></li>
-      <li><b>HBD</b><div>${props.HBD ?? '\u2014'}</div></li>
-      <li><b>TPSA</b><div>${props.TPSA ?? '\u2014'}</div></li>
-      <li><b>RotB</b><div>${props.RotB ?? '\u2014'}</div></li>
+      <li><b>MolWt</b><div>${props.MolWt ?? '—'}</div></li>
+      <li><b>LogP</b><div>${props.LogP ?? '—'}</div></li>
+      <li><b>HBA</b><div>${props.HBA ?? '—'}</div></li>
+      <li><b>HBD</b><div>${props.HBD ?? '—'}</div></li>
+      <li><b>TPSA</b><div>${props.TPSA ?? '—'}</div></li>
+      <li><b>RotB</b><div>${props.RotB ?? '—'}</div></li>
     `;
     molCard.style.display = 'block';
     molCard.classList.add('fade-in');
@@ -1714,7 +961,7 @@ function addRecent(drug){
     recent.unshift(drug);
     if(recent.length > 6) recent.pop();
   }
-  document.getElementById('recentList').innerHTML = recent.map(d => `<li>${d}</li>`).join('');
+  document.getElementById('recentList').innerHTML = recent.map(d => `<li>💊 ${d}</li>`).join('');
 }
 
 /* -------------------------------
@@ -1728,17 +975,19 @@ function sendChat(){
   if(!text) return;
   const body = document.getElementById('chatBody');
   body.innerHTML += `<p><b>You:</b> ${escapeHtml(text)}</p>`;
-  body.innerHTML += `<p><b>MedBot:</b> <span class="loading-dots"><span></span><span></span><span></span></span></p>`;
+  body.innerHTML += `<p><b>🤖:</b> Thinking... <small style="color:#6b5b95">simulated</small></p>`;
   body.scrollTop = body.scrollHeight;
   input.value = '';
 
+  // Simulate a helpful reply (toy logic)
   setTimeout(()=> {
     const reply = generateReply(text);
+    // remove 'Thinking...' last message
     const nodes = body.querySelectorAll('p');
     if(nodes.length) nodes[nodes.length-1].remove();
-    body.innerHTML += `<p><b>MedBot:</b> ${escapeHtml(reply)}</p>`;
+    body.innerHTML += `<p><b>🤖:</b> ${escapeHtml(reply)}</p>`;
     body.scrollTop = body.scrollHeight;
-  }, 700 + Math.random()*600);
+  }, 900 + Math.random()*900);
 }
 
 function generateReply(q){
@@ -1746,53 +995,59 @@ function generateReply(q){
   if(q.includes('warfarin')) return 'Warfarin often interacts with VKORC1 and CYP2C9. Check patient genotype and INR.';
   if(q.includes('cyp2c9') || q.includes('cyp2d6')) return 'CYP polymorphisms can change metabolism. Consider frequency of alleles in population.';
   if(q.includes('reduce')) return 'Dose adjustments and increased monitoring are common strategies. Consult a clinician for specifics.';
-  if(q.includes('how')) return 'I can show predicted gene affinities \u2014 run a prediction with a drug name.';
-  return "I can help with predictions, brief drug\u2013gene notes, and exporting results. Try asking: 'Predict Warfarin' or 'Show me hERG'.";
+  if(q.includes('how')) return 'I can show predicted gene affinities — run a prediction with a drug name.';
+  return "I can help with predictions, brief drug–gene notes, and exporting results. Try asking: 'Predict Warfarin' or 'Show me hERG'.";
 }
 
 function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
 /* -------------------------------
-   PDF Report Download
+   MedShield AI – PDF Report Download
    ------------------------------- */
 document.getElementById("reportDownloadBtn").addEventListener("click", () => {
   if (!lastResult) {
-    showToast("No result to download \u2014 run a prediction first", "warning", 3000);
+    showToast("No result to download — run a prediction first", "warning", 3000);
     return;
   }
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
 
-  doc.setFillColor(15, 23, 42);
-  doc.rect(0, 0, 210, 25, "F");
+  // ===== HEADER BAR (with MedShield logo) =====
+doc.setFillColor(126, 87, 194); // Lavender header bar
+doc.rect(0, 0, 210, 25, "F");
 
-  const logoPath = "/static/logo.png";
-  const logoWidth = 10, logoHeight = 10;
-  doc.addImage(logoPath, "PNG", 10, 7, logoWidth, logoHeight);
+// Add logo (local from Flask static path)
+const logoPath = "/static/logo.png"; // or /static/logo.png
+const logoWidth = 10, logoHeight = 10;
+doc.addImage(logoPath, "PNG", 10, 7, logoWidth, logoHeight);
 
-  doc.setTextColor(255, 255, 255);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("MedShield AI", 25, 15);
+// Header text
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(18);
+doc.text("MedShield AI", 25, 15);
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(11);
-  doc.text("AI-Driven Drug\u2013Gene Risk Report", 120, 15);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(11);
+doc.text("AI-Driven Drug–Gene Risk Report", 120, 15);
 
+  // ===== WATERMARK =====
   doc.setTextColor(230, 230, 250);
   doc.setFontSize(90);
-  doc.text("\u{1F9EC}", 140, 180, { angle: 30, align: "center" });
+  doc.text("🧬", 140, 180, { angle: 30, align: "center" });
   doc.setTextColor(0, 0, 0);
 
+  // ===== META INFO =====
   const date = new Date().toLocaleString();
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
   doc.text(`Generated on: ${date}`, 14, 34);
   doc.text(`User Role: ${role || "N/A"}`, 14, 40);
   doc.text(`Drug: ${lastResult.drug || "Unknown"}`, 14, 46);
-  doc.text(`Predicted Overall Risk: ${lastResult.overall_risk || "\u2014"}`, 14, 52);
+  doc.text(`Predicted Overall Risk: ${lastResult.overall_risk || "—"}`, 14, 52);
 
+  // ===== MOLECULAR PROPERTIES =====
   const props = lastResult.props || {};
   let y = 64;
   doc.setFont("helvetica", "bold");
@@ -1803,7 +1058,7 @@ document.getElementById("reportDownloadBtn").addEventListener("click", () => {
   y += 8;
   if (Object.keys(props).length) {
     Object.entries(props).forEach(([k, v]) => {
-      doc.text(`${k}: ${v ?? "\u2014"}`, 18, y);
+      doc.text(`${k}: ${v ?? "—"}`, 18, y);
       y += 6;
     });
   } else {
@@ -1811,6 +1066,7 @@ document.getElementById("reportDownloadBtn").addEventListener("click", () => {
     y += 6;
   }
 
+  // ===== GENE TABLE =====
   const rows = lastResult.rows || [];
   if (rows.length) {
     y += 10;
@@ -1837,6 +1093,7 @@ document.getElementById("reportDownloadBtn").addEventListener("click", () => {
     });
   }
 
+  // ===== RECOMMENDATION =====
   if (lastResult.recommendation) {
     y += 10;
     doc.setFont("helvetica", "bold");
@@ -1849,16 +1106,18 @@ document.getElementById("reportDownloadBtn").addEventListener("click", () => {
     doc.text(textLines, 14, y);
   }
 
-  doc.setDrawColor(14, 165, 233);
+  // ===== FOOTER =====
+  doc.setDrawColor(179, 157, 219);
   doc.line(14, 285, 196, 285);
   doc.setFont("helvetica", "italic");
   doc.setFontSize(10);
   doc.setTextColor(100, 100, 100);
-  doc.text("2025 MedShield AI - Empowering Safer Prescriptions Through AI Insights", 14, 292);
+  doc.text("© 2025 MedShield AI • Empowering Safer Prescriptions Through AI Insights", 14, 292);
 
+  // ===== SAVE FILE =====
   const file = `${(lastResult.drug || "report").replace(/\s+/g, "_")}_MedShieldAI_Report.pdf`;
   doc.save(file);
-  showToast("PDF Report Downloaded", "success", 2500);
+  showToast("📄 PDF Report Downloaded", "success", 2500);
 });
 
 /* -------------------------------
@@ -1869,11 +1128,11 @@ dmBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
   const on = document.body.classList.contains('dark-mode');
   localStorage.setItem('medshield_dark', on ? '1' : '0');
-  dmBtn.textContent = on ? 'Light' : 'Dark';
+  dmBtn.textContent = on ? '☀️ Light' : '🌙 Dark';
 });
 (function initDark(){
   const val = localStorage.getItem('medshield_dark');
-  if(val === '1'){ document.body.classList.add('dark-mode'); dmBtn.textContent = 'Light'; }
+  if(val === '1'){ document.body.classList.add('dark-mode'); dmBtn.textContent = '☀️ Light'; }
 })();
 
 /* -------------------------------
@@ -1888,22 +1147,23 @@ function resetForm(){
 }
 
 /* -------------------------------
-   Back-to-top
+   Back-to-top + Home behavior
    ------------------------------- */
 const toTop = document.getElementById('toTop');
 window.addEventListener('scroll', () => { toTop.style.display = (window.scrollY > 400) ? 'flex' : 'none'; });
 toTop.addEventListener('click', ()=> window.scrollTo({ top: 0, behavior:'smooth' }) );
 
 /* -------------------------------
-   Initialize hint
+   Initialize small friendly hint
    ------------------------------- */
 setTimeout(()=> {
-  showToast('Enter a drug name (e.g. Warfarin) and click Predict', 'info', 4200);
-}, 1200);
-
+  showToast('Tip: enter a drug name (e.g. Warfarin) and click Predict', 'info', 4200);
+}, 1000);
 /* =====================================================
    Drug Scanner + Molecule + Alternatives Integration
    ===================================================== */
+
+// Simple barcode -> drug mapping
 const BARCODE_MAP = {
   "0123456789012": "Warfarin",
   "0001112223334": "Clopidogrel"
@@ -2013,10 +1273,12 @@ async function quickCheckDrug(drugName) {
     const data = await resp.json();
     const overall = data.overall_risk || "Low";
     renderQuickRisk(overall);
+    // Molecule image
     if (data.molecule_image) {
       document.getElementById("moleculeCard").style.display = "block";
       document.getElementById("moleculeImage").src = data.molecule_image;
     }
+    // Alternatives
     const altCard = document.getElementById("alternativesCard");
     const altList = document.getElementById("alternativesList");
     altList.innerHTML = "";
@@ -2050,6 +1312,7 @@ function renderQuickRisk(risk) {
     riskBadge.textContent = "Low Risk";
   }
 }
+
 </script>
 
 </body>
