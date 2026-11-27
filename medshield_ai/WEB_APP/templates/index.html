@@ -531,6 +531,18 @@
           <button class="btn" type="button" id="micGene" title="Speak gene name">🎙️</button>
         </div>
 
+        <!-- Genotype. When supplied, CPIC prescribing guidance for that exact
+             genotype is returned. This is the only patient-specific output. -->
+        <div class="input-group mb-1 mx-auto" style="width:92%; max-width:640px;">
+          <span class="input-group-text">🧪</span>
+          <input type="text" id="genotype" class="form-control"
+                 placeholder="Genotype (optional), e.g. CYP2C19=*2/*2">
+        </div>
+        <div class="mx-auto text-muted" style="width:92%; max-width:640px; font-size:.74rem; text-align:left;">
+          Accepts a diplotype (<code>*2/*2</code>), a phenotype
+          (<code>Poor Metabolizer</code>) or an activity score (<code>0.5</code>).
+          Separate several genes with commas.
+        </div>
 
         <div class="d-flex gap-2 justify-content-center mt-2" style="width:100%">
           <button type="submit" class="btn btn-primary">Predict Risk</button>
@@ -581,6 +593,20 @@
           style="max-height:280px;"/>
     </div>
   </div>
+
+<!-- Genotype-specific CPIC prescribing guidance. Shown only when a genotype was
+     entered. This is the only patient-specific output in the app, so it sits
+     above the drug-level panels. -->
+<div id="cpicCard" class="card mt-3 p-3" style="display:none;border-left:4px solid #5e35b1;">
+  <h5 class="mb-1">Prescribing guidance for this genotype</h5>
+  <div id="cpicMeta" class="text-muted" style="font-size:.82rem;"></div>
+  <div id="cpicBody" class="mt-2"></div>
+  <div class="text-muted mt-1" style="font-size:.78rem;">
+    Recommendation text is quoted verbatim from CPIC. It applies to the genotype
+    entered and does not account for dose, indication, organ function or other
+    medicines.
+  </div>
+</div>
 
 <!-- Curated clinical evidence. This is the authoritative panel: every row
      traces to a PharmGKB clinical annotation with a stated evidence level. -->
@@ -796,12 +822,12 @@ function selectRole(r){
 /* -------------------------------
    Predict (calls Flask /predict)
    ------------------------------- */
-async function predictDrug(drug, gene) {
+async function predictDrug(drug, gene, genotypes) {
   try {
     const response = await fetch('/predict', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ drug, gene, role })
+      body: JSON.stringify({ drug, gene, role, genotypes: genotypes || {} })
     });
     if(!response.ok){
       const err = await response.json().catch(()=>({error:'Unknown error'}));
@@ -818,6 +844,8 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const drug = document.getElementById('drug').value.trim();
   const gene = document.getElementById('gene').value.trim();
+  const genotypeBox = document.getElementById('genotype');
+  const genotypes = parseGenotypes(genotypeBox ? genotypeBox.value : '');
 
   if(!drug){
     showToast('Please enter a drug name', 'danger');
@@ -828,7 +856,7 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
     // show brief UI feedback
     showToast('Analyzing... (simulated)', 'info', 1200);
 
-    const result = await predictDrug(drug, gene);
+    const result = await predictDrug(drug, gene, genotypes);
     lastResult = result; // keep for report download
 
     // Overall band, from the CURATED evidence (not the model).
@@ -850,7 +878,8 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
       `<b>Drug:</b> ${esc(result.drug)} — <small style="color:#6b5b95">${esc(result.role || role)}</small>`
       + (result.recommendation ? `<div class="mt-1" style="font-size:.84rem;color:#4a148c;">${esc(result.recommendation)}</div>` : '');
 
-    // Curated evidence panel + disclaimer.
+    // Genotype guidance first (patient-specific), then drug-level evidence.
+    renderCpic(result);
     renderCurated(result);
 
     // show result block
@@ -1333,6 +1362,92 @@ function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, c => (
     { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
   ));
+}
+
+/* Parse the genotype box: "CYP2C19=*2/*2, HLA-B=*57:01 positive".
+   Commas separate genes; the value may itself contain spaces and slashes, so
+   only the first '=' (or ':') is treated as the separator. */
+function parseGenotypes(text) {
+  const out = {};
+  (text || "").split(",").forEach(part => {
+    const m = part.match(/^\s*([A-Za-z0-9._-]+)\s*[=:]\s*(.+?)\s*$/);
+    if (m) out[m[1].toUpperCase()] = m[2];
+  });
+  return out;
+}
+
+/* Render CPIC genotype-specific guidance. */
+function renderCpic(data) {
+  const card = document.getElementById("cpicCard");
+  const body = document.getElementById("cpicBody");
+  const meta = document.getElementById("cpicMeta");
+  if (!card || !body) return;
+
+  const c = data.cpic;
+  if (!c) { card.style.display = "none"; return; }
+  body.innerHTML = "";
+
+  if (!c.available) {
+    meta.textContent = "";
+    body.innerHTML = `<div class="text-muted" style="font-size:.86rem;">`
+      + `${esc(c.error || "No CPIC guideline for this drug.")}`
+      + (c.note ? `<br><em>${esc(c.note)}</em>` : "") + `</div>`;
+    card.style.display = "block";
+    return;
+  }
+
+  const bits = [];
+  if (c.cpic_drug) bits.push(`CPIC drug: <strong>${esc(c.cpic_drug)}</strong>`);
+  Object.values(c.resolved_genotypes || {}).forEach(g => {
+    bits.push(`${esc(g.gene)} <code>${esc(g.input)}</code> &rarr; `
+      + `<strong>${esc(g.phenotype)}</strong>`);
+  });
+  meta.innerHTML = bits.join(" &middot; ");
+
+  (c.ambiguous_inputs || []).forEach(a => {
+    if (!a.note) return;
+    body.innerHTML += `<div class="p-2 mb-2 rounded" `
+      + `style="background:#fff4e5;border:1px solid #ffd59e;font-size:.8rem;">`
+      + `${esc(a.note)}</div>`;
+  });
+
+  (c.input_errors || []).forEach(e => {
+    body.innerHTML += `<div class="p-2 mb-2 rounded" `
+      + `style="background:#fdecea;border:1px solid #f5c6cb;font-size:.8rem;">`
+      + `${esc(e.error)}`
+      + (e.valid_phenotypes && e.valid_phenotypes.length
+        ? `<br>Accepted phenotypes: ${esc(e.valid_phenotypes.join(", "))}` : "")
+      + `</div>`;
+  });
+
+  if (c.recommendations && c.recommendations.length) {
+    c.recommendations.forEach(m => {
+      const strong = m.classification === "Strong";
+      const keys = Object.entries(m.matched_lookup_keys || {})
+        .map(([g, v]) => `${g} ${v}`).join(", ");
+      body.innerHTML += `<div class="mb-2 p-2 rounded" style="background:#faf8ff;">`
+        + `<div><span class="badge ${strong ? "bg-danger" : "bg-secondary"}">`
+        + `${esc(m.classification)}</span> `
+        + `<small class="text-muted">${esc(keys)} &middot; ${esc(m.population)}</small></div>`
+        + `<div class="mt-1"><strong>${esc(m.recommendation)}</strong></div>`
+        + (m.implications && m.implications.length
+          ? `<div class="text-muted mt-1" style="font-size:.8rem;">${esc(m.implications.join("; "))}</div>` : "")
+        + (m.guideline
+          ? `<div class="mt-1" style="font-size:.76rem;">Guideline: `
+            + (m.guideline_url
+              ? `<a href="${esc(m.guideline_url)}" target="_blank" rel="noopener noreferrer">${esc(m.guideline)}</a>`
+              : esc(m.guideline)) + `</div>` : "")
+        + `</div>`;
+    });
+  } else if ((c.needs_additional_genotype || []).length) {
+    const need = [...new Set(c.needs_additional_genotype
+      .flatMap(i => i.missing_genes))];
+    body.innerHTML += `<div class="text-muted" style="font-size:.86rem;">`
+      + `CPIC guidance for this drug also requires: `
+      + `<strong>${esc(need.join(", "))}</strong>. `
+      + `Supply those genotypes for a recommendation.</div>`;
+  }
+  card.style.display = "block";
 }
 
 /* Render the curated-evidence panel. This is the authoritative output. */

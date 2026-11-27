@@ -59,6 +59,45 @@ severe cutaneous reactions), **UGT1A1**, **NUDT15**, **TPMT**, **CYP2D6**,
 **CYP2C19**, **SLCO1B1**, **G6PD**, **MT-RNR1**, **RYR1/CACNA1S** — most of
 which were absent from the eight genes the model knows.
 
+## Genotype-specific guidance (CPIC)
+
+Supply a genotype and the tool returns the actual prescribing recommendation for
+it, quoted verbatim from CPIC:
+
+```
+Plavix + CYP2C19 *2/*2
+  -> [Strong] Avoid clopidogrel if possible. Use prasugrel or ticagrelor at
+     standard dose if no contraindication.
+
+Ziagen + HLA-B *57:01 positive
+  -> [Strong] Abacavir is not recommended
+
+codeine + CYP2D6 Ultrarapid Metabolizer
+  -> [Strong] Avoid codeine use because of potential for serious toxicity.
+```
+
+`CORE_AI/build_cpic.py` fetches CPIC's tables (api.cpicpgx.org) into
+`data/cpic.json`: 2,159 recommendations, 19 genes, 111,970 diplotypes.
+`CORE_AI/cpic.py` matches a genotype to the right row. Input may be a diplotype
+(`*2/*2`), a phenotype (`Poor Metabolizer`) or an activity score (`0.5`).
+
+Three behaviours worth knowing:
+
+- **Multi-gene guidelines are not answered from half a genotype.** CPIC's
+  thiopurine guideline is keyed on TPMT *and* NUDT15; given only TPMT, the tool
+  reports NUDT15 as missing rather than guessing.
+- **Ambiguous phenotype names are not silently resolved.** CPIC indexes CYP2D6
+  and DPYD by activity score, and one phenotype name spans several. DPYD "Poor
+  Metabolizer" is score 0.0 *or* 0.5 — avoid the drug entirely, or halve the
+  dose. Both are returned, labelled, with the ambiguity stated.
+- **An unrecognised diplotype is rejected, not defaulted.** A typo must not
+  resolve to a phenotype.
+
+The risk band stays **drug-level** and is reported as such (`band_scope`). A
+patient with a normal genotype can correctly see a High band next to "use at
+standard dose": the band says an association exists for the drug, while CPIC
+says what to do for this person. Conflating them would be wrong.
+
 ## Design decisions that matter
 
 **Absence of evidence is reported as `Unknown`, never `Low`.** A drug with no
@@ -94,6 +133,8 @@ medshield_ai/
   CORE_AI/
     knowledge_base.py        query the curated KB (lookup, combinations, banding)
     build_knowledge_base.py  build data/knowledge_base.json from the PharmGKB TSVs
+    cpic.py                  genotype -> CPIC prescribing recommendation
+    build_cpic.py            fetch CPIC tables into data/cpic.json
     drug_database.py         PubChem name -> SMILES / CID / parent CID, cached
     featurize.py             RDKit descriptors + gene one-hot; model domain check
     train_association.py     honest retrain: real negatives, drug-disjoint split,
@@ -105,6 +146,7 @@ medshield_ai/
     templates/index.html     UI
   tests/
     test_knowledge_base.py   12 tests, including clinical correctness assertions
+    test_cpic.py             15 tests asserting published CPIC guidance
 ```
 
 ## Setup
@@ -126,7 +168,9 @@ Build the knowledge base, then run:
 ```bash
 cd medshield_ai
 ../.venv/Scripts/python -m CORE_AI.build_knowledge_base
+../.venv/Scripts/python -m CORE_AI.build_cpic
 ../.venv/Scripts/python tests/test_knowledge_base.py
+../.venv/Scripts/python tests/test_cpic.py
 cd WEB_APP && ../../.venv/Scripts/python app.py      # http://127.0.0.1:5000
 ```
 
@@ -152,14 +196,36 @@ cd WEB_APP && ../../.venv/Scripts/python app.py      # http://127.0.0.1:5000
 }
 ```
 
+Add a genotype to get prescribing guidance for it:
+
+```json
+{"drug": "Plavix", "genotypes": {"CYP2C19": "*2/*2"}}
+```
+
+```json
+{"cpic": {"available": true, "cpic_drug": "clopidogrel",
+          "recommendations": [{"classification": "Strong",
+            "recommendation": "Avoid clopidogrel if possible. Use prasugrel or ticagrelor...",
+            "phenotypes": {"CYP2C19": "Poor Metabolizer"}, "population": "CVI ACS PCI"}]}}
+```
+
 `GET /api/genes` returns the genes the knowledge base covers versus the eight
-the model supports.
+the model supports. `GET /api/genotype-options?gene=CYP2C19` returns the
+diplotypes, phenotypes and activity scores CPIC accepts for a gene — the
+notation differs per gene (star alleles for CYP2C19, allele status for HLA-B,
+HGVS variants plus activity scores for DPYD).
 
 ## Known limitations
 
-- Findings are drug–gene level, **not genotype level**. Real guidance is keyed to
-  diplotypes (CYP2C19 \*2/\*2, HLA-B\*57:01). Acting on a finding requires the
-  patient's actual genotype, which this tool does not take as input.
+- Genotype guidance covers the **19 genes CPIC publishes recommendations for**.
+  The curated knowledge base covers 48 genes; the other 29 have documented
+  associations but no CPIC prescribing guideline, so no action text exists.
+- CPIC populations matter: several drugs have different guidance per indication
+  (clopidogrel differs for ACS/PCI versus non-ACS). All matching populations are
+  returned, labelled; the tool does not pick one, because it does not know the
+  indication.
+- `data/cpic.json` is a dated snapshot (see `_fetched`). CPIC revises
+  guidelines; re-run `build_cpic` to refresh.
 - The PharmGKB extracts in `data/` are a point-in-time snapshot with no version
   stamp. A production system would pin and refresh them.
 - 19 of 135 knowledge-base drugs have no PubChem CID (mostly multi-component or

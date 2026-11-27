@@ -106,6 +106,7 @@
     "phenytoin": 1775,
     "piroxicam": 54676228,
     "pitavastatin": 5282452,
+    "plavix": 115366,
     "pravastatin": 54687,
     "propafenone": 4932,
     "quetiapine": 5002,
@@ -136,6 +137,7 @@
     "voriconazole": 71616,
     "vortioxetine": 9966051,
     "warfarin": 54678486,
+    "ziagen": 441300,
     "zuclopenthixol": 5311507
   },
   "hits": {
@@ -150,6 +152,7 @@
     "4-hydroxytamoxifen": "CC/C(=C(\\C1=CC=C(C=C1)O)/C2=CC=C(C=C2)OCCN(C)C)/C3=CC=CC=C3",
     "6beta-hydroxyprogesterone": "CC(=O)[C@H]1CC[C@@H]2[C@@]1(CC[C@H]3[C@H]2C[C@H](C4=CC(=O)CC[C@]34C)O)C",
     "6beta-hydroxytestosterone": "C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)C[C@H](C4=CC(=O)CC[C@]34C)O",
+    "abacavir": "C1CC1NC2=C3C(=NC(=N2)N)N(C=N3)[C@@H]4C[C@@H](C=C4)CO",
     "abrocitinib": "CCCS(=O)(=O)NC1CC(C1)N(C)C2=NC=NC3=C2C=CN3",
     "acalabrutinib": "CC#CC(=O)N1CCC[C@H]1C2=NC(=C3N2C=CN=C3N)C4=CC=C(C=C4)C(=O)NC5=CC=CC=N5",
     "aceclofenac": "C1=CC=C(C(=C1)CC(=O)OCC(=O)O)NC2=C(C=CC=C2Cl)Cl",
@@ -429,6 +432,7 @@
     "piroxicam": "CN1C(=C(C2=CC=CC=C2S1(=O)=O)O)C(=O)NC3=CC=CC=N3",
     "pitavastatin": "C1CC1C2=NC3=CC=CC=C3C(=C2/C=C/[C@H](C[C@H](CC(=O)O)O)O)C4=CC=C(C=C4)F",
     "pitolisant": "C1CCN(CC1)CCCOCCCC2=CC=C(C=C2)Cl",
+    "plavix": "COC(=O)[C@H](C1=CC=CC=C1Cl)N2CCC3=C(C2)C=CS3.OS(=O)(=O)O",
     "posaconazole": "CC[C@@H]([C@H](C)O)N1C(=O)N(C=N1)C2=CC=C(C=C2)N3CCN(CC3)C4=CC=C(C=C4)OC[C@H]5C[C@](OC5)(CN6C=NC=N6)C7=C(C=C(C=C7)F)F",
     "pravastatin": "CC[C@H](C)C(=O)O[C@H]1C[C@@H](C=C2[C@H]1[C@H]([C@H](C=C2)C)CC[C@H](C[C@H](CC(=O)O)O)O)O",
     "prednisolone": "C[C@]12C[C@@H]([C@H]3[C@H]([C@@H]1CC[C@@]2(C(=O)CO)O)CCC4=CC(=O)C=C[C@]34C)O",
@@ -533,6 +537,7 @@
     "warfarin sodium": "CC(=O)CC(C1=CC=CC=C1)C2=C(C3=CC=CC=C3OC2=O)[O-].[Na+]",
     "yohimbine": "COC(=O)[C@H]1[C@H](CC[C@@H]2[C@@H]1C[C@H]3C4=C(CCN3C2)C5=CC=CC=C5N4)O",
     "zafirlukast": "CC1=CC=CC=C1S(=O)(=O)NC(=O)C2=CC(=C(C=C2)CC3=CN(C4=C3C=C(C=C4)NC(=O)OC5CCCC5)C)OC",
+    "ziagen": "C1CC1NC2=C3C(=NC(=N2)N)N(C=N3)[C@@H]4C[C@@H](C=C4)CO",
     "zidovudine": "CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)CO)N=[N+]=[N-]",
     "zolpidem": "CC1=CC=C(C=C1)C2=C(N3C=C(C=CC3=N2)C)CC(=O)N(C)C",
     "zonisamide": "C1=CC=C2C(=C1)C(=NO2)CS(=O)(=O)N"
@@ -578,5 +583,8 @@
     "trastuzumab",
     "umeclidinium / vilanterol",
     "xanomeline / trospium"
-  ]
+  ],
+  "parents": {
+    "115366": 60606
+  }
 }
