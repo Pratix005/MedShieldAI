@@ -2,7 +2,6 @@
 import os
 import pandas as pd
 import numpy as np
-from CORE_AI.drug_database import DRUG_DATABASE
 from CORE_AI.featurize import build_pair_features
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
@@ -21,18 +20,10 @@ def make_dataset():
         drug = row["drug"]
         gene = row["gene"]
         label = int(row["label"])
-        smiles = None
 
-        # case-insensitive lookup in DRUG_DATABASE
-        for k, v in DRUG_DATABASE.items():
-            if k.lower() == drug.lower():
-                smiles = v
-                break
-        if smiles is None:
-            # skip unknown drugs
-            continue
-
-        feat = build_pair_features(smiles, gene)
+        # build_pair_features resolves the SMILES from the name (PubChem-backed)
+        # and returns None for anything unresolvable.
+        feat = build_pair_features(drug, gene)
         if feat is None:
             continue
 

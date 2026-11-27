@@ -1,0 +1,4463 @@
+{
+ "_source": "PharmGKB clinical variant annotations + relationships",
+ "_levels_included": [
+  "1A",
+  "1B",
+  "2A",
+  "2B"
+ ],
+ "_level_meaning": {
+  "1A": "In a dosing guideline or drug label, replicated evidence",
+  "1B": "Strong evidence, not yet in a guideline",
+  "2A": "Moderate evidence, known pharmacogene",
+  "2B": "Moderate evidence",
+  "3": "Single study or preliminary",
+  "4": "Case report or inference only"
+ },
+ "_caveat": "Levels grade how well ESTABLISHED an association is, not how severe it is. Phenotype category (Toxicity/Efficacy/Dosage) carries the clinical meaning.",
+ "_generated": "2026-11-27",
+ "_drug_count": 135,
+ "_pair_count": 182,
+ "_gene_count": 48,
+ "by_cid": {
+  "54690031": "lornoxicam",
+  "44599207": "siponimod",
+  "60953": "capecitabine",
+  "9578005": "dexlansoprazole",
+  "54678486": "warfarin",
+  "148192": "atazanavir",
+  "2265": "azathioprine",
+  "3385": "fluorouracil",
+  "123631": "gefitinib",
+  "54680692": "phenprocoumon",
+  "667490": "mercaptopurine",
+  "5284569": "hydrocodone",
+  "656665": "tropisetron",
+  "3672": "ibuprofen",
+  "2995": "desipramine",
+  "3394": "flurbiprofen",
+  "5584": "trimipramine",
+  "54677971": "tenoxicam",
+  "2662": "celecoxib",
+  "54676228": "piroxicam",
+  "21319": "flucloxacillin",
+  "1775": "phenytoin",
+  "60838": "irinotecan",
+  "64139": "efavirenz",
+  "441300": "abacavir",
+  "54676537": "acenocoumarol",
+  "37542": "ribavirin",
+  "3010818": "telaprevir",
+  "10324367": "boceprevir",
+  "136170999": "folfiri",
+  "2160": "amitriptyline",
+  "2801": "clomipramine",
+  "3696": "imipramine",
+  "5284371": "codeine",
+  "3158": "doxepin",
+  "4543": "nortriptyline",
+  "71616": "voriconazole",
+  "3883": "lansoprazole",
+  "60606": "clopidogrel",
+  "4679": "pantoprazole",
+  "54841": "atomoxetine",
+  "3356": "flecainide",
+  "43815": "paroxetine",
+  "2733526": "tamoxifen",
+  "4171": "metoprolol",
+  "3559": "haloperidol",
+  "4932": "propafenone",
+  "5073": "risperidone",
+  "146570": "escitalopram",
+  "4594": "omeprazole",
+  "5311507": "zuclopenthixol",
+  "5386": "tegafur",
+  "36294": "tobramycin",
+  "37768": "amikacin",
+  "19649": "streptomycin",
+  "6032": "kanamycin",
+  "3467": "gentamicin",
+  "4595": "ondansetron",
+  "60795": "aripiprazole",
+  "33741": "tramadol",
+  "1548972": "fluvastatin",
+  "54454": "simvastatin",
+  "64718": "simvastatin acid",
+  "53232": "lovastatin",
+  "60823": "atorvastatin",
+  "64727": "lovastatin acid",
+  "446157": "rosuvastatin",
+  "5282452": "pitavastatin",
+  "54687": "pravastatin",
+  "34312": "oxcarbazepine",
+  "135401907": "allopurinol",
+  "2771": "citalopram",
+  "2723601": "thioguanine",
+  "2554": "carbamazepine",
+  "3878": "lamotrigine",
+  "9966051": "vortioxetine",
+  "68617": "sertraline",
+  "5656": "venlafaxine",
+  "42113": "desflurane",
+  "3226": "enflurane",
+  "3562": "halothane",
+  "3763": "isoflurane",
+  "4116": "methoxyflurane",
+  "5206": "sevoflurane",
+  "5314": "succinylcholine",
+  "445643": "tacrolimus",
+  "8378": "neomycin",
+  "5002": "quetiapine",
+  "5324346": "fluvoxamine",
+  "54677470": "meloxicam",
+  "16220172": "ivacaftor",
+  "104842": "sn-38",
+  "89594": "nicotine",
+  "3767": "isoniazid",
+  "5360696": "dextromethorphan",
+  "126941": "methotrexate",
+  "2955": "dapsone",
+  "4463": "nevirapine",
+  "4100": "methazolamide",
+  "5152": "salmeterol",
+  "44093": "captopril",
+  "4205": "mirtazapine",
+  "5029": "rabeprazole",
+  "4095": "methadone",
+  "5284603": "oxycodone",
+  "3345": "fentanyl",
+  "444": "bupropion",
+  "2966": "debrisoquine",
+  "2789": "clobazam",
+  "89657": "norclobazam",
+  "176870": "erlotinib",
+  "702": "ethanol",
+  "2244": "aspirin",
+  "3639": "hydrochlorothiazide",
+  "30323": "daunorubicin",
+  "31703": "doxorubicin"
+ },
+ "drugs": {
+  "lornoxicam": {
+   "drug": "lornoxicam",
+   "cid": 54690031,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*3, CYP2C9*13"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "siponimod": {
+   "drug": "siponimod",
+   "cid": 44599207,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "capecitabine": {
+   "drug": "capecitabine",
+   "cid": 60953,
+   "genes": {
+    "DPYD": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Neoplasms"
+     ],
+     "variants": [
+      "rs17376848",
+      "rs2297595",
+      "rs1801265",
+      "rs1801160",
+      "rs1801159",
+      "rs1801158",
+      "rs67376798",
+      "rs3918290",
+      "rs55886062",
+      "rs56038477",
+      "rs75017182"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "dexlansoprazole": {
+   "drug": "dexlansoprazole",
+   "cid": 9578005,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "warfarin": {
+   "drug": "warfarin",
+   "cid": 54678486,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Dosage",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "over-anticoagulation",
+      "Hemorrhage",
+      "Cardiovascular Disease",
+      "Atrial Fibrillation",
+      "Heart valve replacement"
+     ],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*5, CYP2C9*6, CYP2C9*11",
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*4, CYP2C9*5, CYP2C9*6, CYP2C9*8, CYP2C9*11",
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*13, CYP2C9*14"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "VKORC1": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Toxicity",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "over-anticoagulation",
+      "time to therapeutic inr",
+      "time in therapeutic range",
+      "Hemorrhage"
+     ],
+     "variants": [
+      "rs9923231",
+      "rs8050894",
+      "rs9934438",
+      "rs2359612",
+      "rs7294",
+      "rs2884737",
+      "rs61742245"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP4F2": {
+     "level": "1A",
+     "categories": [
+      "Dosage"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "rs2108622"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "atazanavir": {
+   "drug": "atazanavir",
+   "cid": 148192,
+   "genes": {
+    "UGT1A1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "HIV infectious disease",
+      "Hyperbilirubinemia"
+     ],
+     "variants": [
+      "UGT1A1*1, UGT1A1*6, UGT1A1*28, UGT1A1*36, UGT1A1*37"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "atazanavir / ritonavir": {
+   "drug": "atazanavir / ritonavir",
+   "cid": null,
+   "genes": {
+    "UGT1A1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "HIV infectious disease",
+      "Hyperbilirubinemia"
+     ],
+     "variants": [
+      "UGT1A1*1, UGT1A1*6, UGT1A1*28, UGT1A1*36, UGT1A1*37"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "azathioprine": {
+   "drug": "azathioprine",
+   "cid": 2265,
+   "genes": {
+    "NUDT15": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Inflammatory Bowel Diseases",
+      "Myelosuppression"
+     ],
+     "variants": [
+      "rs116855232"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "TPMT": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Dose reduction",
+      "Leukopenia",
+      "Myelosuppression"
+     ],
+     "variants": [
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C",
+      "TPMT*1, TPMT*3A, TPMT*3C",
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C, TPMT*6"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "fluorouracil": {
+   "drug": "fluorouracil",
+   "cid": 3385,
+   "genes": {
+    "DPYD": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Other"
+     ],
+     "phenotypes": [
+      "Neoplasms"
+     ],
+     "variants": [
+      "rs17376848",
+      "rs1801158",
+      "rs1801159",
+      "rs1801265",
+      "rs1801160",
+      "rs78060119",
+      "rs59086055",
+      "rs115232898",
+      "rs72549306",
+      "rs72549303",
+      "rs1801268",
+      "rs1801266",
+      "rs72549309",
+      "rs2297595",
+      "rs67376798",
+      "rs3918290",
+      "rs55886062",
+      "rs148994843",
+      "rs56005131",
+      "rs56038477",
+      "rs75017182"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "gefitinib": {
+   "drug": "gefitinib",
+   "cid": 123631,
+   "genes": {
+    "EGFR": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Non-Small Cell Lung Carcinoma",
+      "Drug Resistance"
+     ],
+     "variants": [
+      "rs121434568",
+      "rs121434569"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "phenprocoumon": {
+   "drug": "phenprocoumon",
+   "cid": 54680692,
+   "genes": {
+    "VKORC1": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Hemorrhage",
+      "over-anticoagulation",
+      "time above therapeutic range"
+     ],
+     "variants": [
+      "rs9923231",
+      "rs9934438"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "mercaptopurine": {
+   "drug": "mercaptopurine",
+   "cid": 667490,
+   "genes": {
+    "NUDT15": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Leukopenia",
+      "Neutropenia",
+      "Acute lymphoblastic leukemia"
+     ],
+     "variants": [
+      "rs116855232",
+      "NUDT15*1, NUDT15*2, NUDT15*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "TPMT": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Dosage",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Dose reduction"
+     ],
+     "variants": [
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C, TPMT*4, TPMT*5, TPMT*6, TPMT*7, TPMT*8, TPMT*9, TPMT*12, TPMT*14, TPMT*15, TPMT*16, TPMT*23",
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C, TPMT*9",
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C, TPMT*4, TPMT*6, TPMT*9, TPMT*12"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "hydrocodone": {
+   "drug": "hydrocodone",
+   "cid": 5284569,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Pain"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*4, CYP2D6*5, CYP2D6*17, CYP2D6*41",
+      "CYP2D6*5, CYP2D6*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "tropisetron": {
+   "drug": "tropisetron",
+   "cid": 656665,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Efficacy",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Vomiting"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2xN",
+      "CYP2D6*1, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ibuprofen": {
+   "drug": "ibuprofen",
+   "cid": 3672,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "desipramine": {
+   "drug": "desipramine",
+   "cid": 2995,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Major Depressive Disorder",
+      "Mental Disorders",
+      "Depressive Disorder"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*2xN, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*9, CYP2D6*10",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "rasburicase": {
+   "drug": "rasburicase",
+   "cid": null,
+   "genes": {
+    "G6PD": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Hemolysis",
+      "Methemoglobinemia"
+     ],
+     "variants": [
+      "G6PD A- 202A_376G, G6PD B (reference), G6PD Mediterranean, Dallas, Panama, Sassari, Cagliari, Birmingham"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "flurbiprofen": {
+   "drug": "flurbiprofen",
+   "cid": 3394,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*29"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "trimipramine": {
+   "drug": "trimipramine",
+   "cid": 5584,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "tenoxicam": {
+   "drug": "tenoxicam",
+   "cid": 54677971,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "celecoxib": {
+   "drug": "celecoxib",
+   "cid": 2662,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*13"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "piroxicam": {
+   "drug": "piroxicam",
+   "cid": 54676228,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "ivacaftor / lumacaftor": {
+   "drug": "ivacaftor / lumacaftor",
+   "cid": null,
+   "genes": {
+    "CFTR": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Cystic Fibrosis"
+     ],
+     "variants": [
+      "rs113993960"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ivacaftor / tezacaftor": {
+   "drug": "ivacaftor / tezacaftor",
+   "cid": null,
+   "genes": {
+    "CFTR": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Cystic Fibrosis"
+     ],
+     "variants": [
+      "rs113993960"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "flucloxacillin": {
+   "drug": "flucloxacillin",
+   "cid": 21319,
+   "genes": {
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug-induced liver injury"
+     ],
+     "variants": [
+      "HLA-B*57:01"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "phenytoin": {
+   "drug": "phenytoin",
+   "cid": 1775,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Epilepsy"
+     ],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3",
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*5, CYP2C9*6, CYP2C9*8, CYP2C9*11, CYP2C9*13, CYP2C9*14, CYP2C9*16, CYP2C9*29, CYP2C9*31, CYP2C9*33, CYP2C9*37, CYP2C9*39, CYP2C9*42, CYP2C9*43, CYP2C9*45, CYP2C9*50, CYP2C9*52, CYP2C9*55"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*15:02"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "irinotecan": {
+   "drug": "irinotecan",
+   "cid": 60838,
+   "genes": {
+    "UGT1A1": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Neutropenia",
+      "Diarrhea"
+     ],
+     "variants": [
+      "UGT1A1*1, UGT1A1*28",
+      "UGT1A1*1, UGT1A1*6, UGT1A1*28",
+      "UGT1A1*1, UGT1A1*6",
+      "rs10929302"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "efavirenz": {
+   "drug": "efavirenz",
+   "cid": 64139,
+   "genes": {
+    "CYP2B6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "HIV infectious disease"
+     ],
+     "variants": [
+      "CYP2B6*1, CYP2B6*2, CYP2B6*6, CYP2B6*18, CYP2B6*38",
+      "rs3745274",
+      "CYP2B6*1, CYP2B6*4, CYP2B6*6, CYP2B6*9, CYP2B6*18, CYP2B6*28",
+      "CYP2B6*1, CYP2B6*6, CYP2B6*26"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "abacavir": {
+   "drug": "abacavir",
+   "cid": 441300,
+   "genes": {
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Hypersensitivity",
+      "HIV infectious disease"
+     ],
+     "variants": [
+      "HLA-B*57:01"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "acenocoumarol": {
+   "drug": "acenocoumarol",
+   "cid": 54676537,
+   "genes": {
+    "VKORC1": {
+     "level": "1A",
+     "categories": [
+      "Dosage"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "rs9923231",
+      "rs9934438"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "CYP2C9": {
+     "level": "1B",
+     "categories": [
+      "Toxicity",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "over-anticoagulation",
+      "Hemorrhage"
+     ],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP4F2": {
+     "level": "2A",
+     "categories": [
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Atrial Fibrillation"
+     ],
+     "variants": [
+      "rs2108622"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "peginterferon alfa-2a": {
+   "drug": "peginterferon alfa-2a",
+   "cid": null,
+   "genes": {
+    "IFNL3,IFNL4": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs12979860"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "IFNL3": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection",
+      "HIV infectious disease"
+     ],
+     "variants": [
+      "rs8099917",
+      "rs11881222"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "IFNL4": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs11322783"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "peginterferon alfa-2b": {
+   "drug": "peginterferon alfa-2b",
+   "cid": null,
+   "genes": {
+    "IFNL3,IFNL4": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs12979860"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "IFNL3": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection",
+      "HIV infectious disease"
+     ],
+     "variants": [
+      "rs8099917",
+      "rs11881222"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "IFNL4": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs11322783"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "ITPA": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Anemia",
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs1127354",
+      "rs7270101"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ribavirin": {
+   "drug": "ribavirin",
+   "cid": 37542,
+   "genes": {
+    "IFNL3,IFNL4": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs12979860"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "IFNL3": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection",
+      "Hepatitis C virus infection",
+      "HIV infectious disease"
+     ],
+     "variants": [
+      "rs8099917",
+      "rs11881222"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "IFNL4": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs11322783"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "ITPA": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Anemia",
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs1127354",
+      "rs7270101"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "telaprevir": {
+   "drug": "telaprevir",
+   "cid": 3010818,
+   "genes": {
+    "IFNL3,IFNL4": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs12979860"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "IFNL3": {
+     "level": "2A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs8099917"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "boceprevir": {
+   "drug": "boceprevir",
+   "cid": 10324367,
+   "genes": {
+    "IFNL3,IFNL4": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs12979860"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "folfiri": {
+   "drug": "FOLFIRI",
+   "cid": 136170999,
+   "genes": {
+    "UGT1A1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Neutropenia",
+      "Diarrhea"
+     ],
+     "variants": [
+      "UGT1A1*1, UGT1A1*28",
+      "UGT1A1*1, UGT1A1*6, UGT1A1*28",
+      "UGT1A1*1, UGT1A1*6"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "amitriptyline": {
+   "drug": "amitriptyline",
+   "cid": 2160,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Major Depressive Disorder",
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "clomipramine": {
+   "drug": "clomipramine",
+   "cid": 2801,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Major Depressive Disorder",
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6",
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "imipramine": {
+   "drug": "imipramine",
+   "cid": 3696,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Dosage",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Major Depressive Disorder",
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6",
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2xN, CYP2D6*4, CYP2D6*5",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Major Depressive Disorder"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "codeine": {
+   "drug": "codeine",
+   "cid": 5284371,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Efficacy",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Pain"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN",
+      "CYP2D6*1, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*17, CYP2D6*40",
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*17, CYP2D6*29, CYP2D6*36, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "doxepin": {
+   "drug": "doxepin",
+   "cid": 3158,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    },
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*9, CYP2D6*10, CYP2D6*35, CYP2D6*35xN, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "nortriptyline": {
+   "drug": "nortriptyline",
+   "cid": 4543,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Major Depressive Disorder"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10",
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "voriconazole": {
+   "drug": "voriconazole",
+   "cid": 71616,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "lansoprazole": {
+   "drug": "lansoprazole",
+   "cid": 3883,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Gastroesophageal Reflux",
+      "Helicobacter Infections"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*8, CYP2C19*9, CYP2C19*17",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "clopidogrel": {
+   "drug": "clopidogrel",
+   "cid": 60606,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Efficacy",
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Cardiovascular Disease",
+      "Acute coronary syndrome",
+      "Stroke",
+      "Transient Ischemic Attack"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*8, CYP2C19*10, CYP2C19*17, CYP2C19*19, CYP2C19*25, CYP2C19*26",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*4, CYP2C19*5, CYP2C19*6, CYP2C19*8, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CES1": {
+     "level": "2B",
+     "categories": [
+      "Efficacy",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "rs71647871"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "pantoprazole": {
+   "drug": "pantoprazole",
+   "cid": 4679,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Helicobacter Infections",
+      "Ulcer"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "atomoxetine": {
+   "drug": "atomoxetine",
+   "cid": 54841,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Attention Deficit Disorder with Hyperactivity"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4, CYP2D6*4xN, CYP2D6*5, CYP2D6*10, CYP2D6*17, CYP2D6*92, CYP2D6*96",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*4xN, CYP2D6*5, CYP2D6*6"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "flecainide": {
+   "drug": "flecainide",
+   "cid": 3356,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Cardiac rhythm disease"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4, CYP2D6*5, CYP2D6*10, CYP2D6*21, CYP2D6*36"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "paroxetine": {
+   "drug": "paroxetine",
+   "cid": 43815,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*9, CYP2D6*10, CYP2D6*14, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "tamoxifen": {
+   "drug": "tamoxifen",
+   "cid": 2733526,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Efficacy",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Breast Neoplasms"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*7, CYP2D6*9, CYP2D6*10, CYP2D6*10x2, CYP2D6*11, CYP2D6*17, CYP2D6*21, CYP2D6*36, CYP2D6*41",
+      "CYP2D6*1, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*17, CYP2D6*29, CYP2D6*35, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "metoprolol": {
+   "drug": "metoprolol",
+   "cid": 4171,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Dosage",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Heart Failure",
+      "Hypertension"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4",
+      "CYP2D6*1, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*9, CYP2D6*10, CYP2D6*17, CYP2D6*29, CYP2D6*31, CYP2D6*35, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "haloperidol": {
+   "drug": "haloperidol",
+   "cid": 3559,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Schizophrenia"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*10, CYP2D6*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "propafenone": {
+   "drug": "propafenone",
+   "cid": 4932,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Cardiac rhythm disease",
+      "Tachycardia"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*5, CYP2D6*10, CYP2D6*36"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "risperidone": {
+   "drug": "risperidone",
+   "cid": 5073,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Psychotic Disorder",
+      "Schizophrenia"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*14"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "escitalopram": {
+   "drug": "escitalopram",
+   "cid": 146570,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Major Depressive Disorder",
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "omeprazole": {
+   "drug": "omeprazole",
+   "cid": 4594,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Efficacy",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Esophagitis",
+      "Gastroesophageal Reflux",
+      "Helicobacter Infections",
+      "Peptic Ulcer Disease"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*9, CYP2C19*10, CYP2C19*17, CYP2C19*24, CYP2C19*26"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "zuclopenthixol": {
+   "drug": "zuclopenthixol",
+   "cid": 5311507,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Schizophrenia"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "tegafur": {
+   "drug": "tegafur",
+   "cid": 5386,
+   "genes": {
+    "DPYD": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Neoplasms"
+     ],
+     "variants": [
+      "rs67376798",
+      "rs3918290",
+      "rs55886062"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "tobramycin": {
+   "drug": "tobramycin",
+   "cid": 36294,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617",
+      "rs267606619"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "amikacin": {
+   "drug": "amikacin",
+   "cid": 37768,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "aminoglycoside antibacterials": {
+   "drug": "aminoglycoside antibacterials",
+   "cid": null,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617",
+      "rs267606619",
+      "rs267606618"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "streptomycin": {
+   "drug": "streptomycin",
+   "cid": 19649,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617",
+      "rs267606619",
+      "rs267606618"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "kanamycin": {
+   "drug": "kanamycin",
+   "cid": 6032,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617",
+      "rs267606619",
+      "rs267606618"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "gentamicin": {
+   "drug": "gentamicin",
+   "cid": 3467,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606619",
+      "rs267606618",
+      "rs267606617"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ondansetron": {
+   "drug": "ondansetron",
+   "cid": 4595,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Vomiting"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN, CYP2D6*4, CYP2D6*5, CYP2D6*10, CYP2D6*35xN"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "aripiprazole": {
+   "drug": "aripiprazole",
+   "cid": 60795,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Psychotic Disorder",
+      "Schizoaffective disorder",
+      "Schizophrenia"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*41"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "tramadol": {
+   "drug": "tramadol",
+   "cid": 33741,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Efficacy",
+      "Toxicity",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Pain",
+      "Postoperative",
+      "Cardiotoxicity",
+      "Drug Toxicity"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*9, CYP2D6*10, CYP2D6*17, CYP2D6*41",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*17",
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "fluvastatin": {
+   "drug": "fluvastatin",
+   "cid": 1548972,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "simvastatin": {
+   "drug": "simvastatin",
+   "cid": 54454,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "simvastatin acid": {
+   "drug": "simvastatin acid",
+   "cid": 64718,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "lovastatin": {
+   "drug": "lovastatin",
+   "cid": 53232,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15",
+      "rs4149056"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "atorvastatin": {
+   "drug": "atorvastatin",
+   "cid": 60823,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15, SLCO1B1*37",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "APOE": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Coronary Disease",
+      "Hyperlipidemias"
+     ],
+     "variants": [
+      "rs7412"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "lovastatin acid": {
+   "drug": "lovastatin acid",
+   "cid": 64727,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "rosuvastatin": {
+   "drug": "rosuvastatin",
+   "cid": 446157,
+   "genes": {
+    "ABCG2": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity",
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "statin-related myopathy",
+      "Hypercholesterolemia",
+      "Myocardial Infarction"
+     ],
+     "variants": [
+      "rs2231142"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Hypercholesterolemia",
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*9, SLCO1B1*14, SLCO1B1*15, SLCO1B1*37",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "pitavastatin": {
+   "drug": "pitavastatin",
+   "cid": 5282452,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15, SLCO1B1*37",
+      "rs4149056"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "pravastatin": {
+   "drug": "pravastatin",
+   "cid": 54687,
+   "genes": {
+    "SLCO1B1": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056",
+      "SLCO1B1*1, SLCO1B1*5, SLCO1B1*15"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "oxcarbazepine": {
+   "drug": "oxcarbazepine",
+   "cid": 34312,
+   "genes": {
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stevens-Johnson Syndrome"
+     ],
+     "variants": [
+      "HLA-B*15:02"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "allopurinol": {
+   "drug": "allopurinol",
+   "cid": 135401907,
+   "genes": {
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Hypersensitivity",
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*58:01"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "ABCG2": {
+     "level": "1A",
+     "categories": [
+      "Efficacy",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Gout"
+     ],
+     "variants": [
+      "rs2231142"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-A": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Hypersensitivity",
+      "Stevens-Johnson Syndrome"
+     ],
+     "variants": [
+      "HLA-A*33:03"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-C": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-C*03:02"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "citalopram": {
+   "drug": "citalopram",
+   "cid": 2771,
+   "genes": {
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Major Depressive Disorder"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17",
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*4"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "thioguanine": {
+   "drug": "thioguanine",
+   "cid": 2723601,
+   "genes": {
+    "TPMT": {
+     "level": "1A",
+     "categories": [
+      "Toxicity",
+      "Dosage",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Acute lymphoblastic leukemia",
+      "Neoplasms",
+      "Neutropenia",
+      "Pancytopenia",
+      "Thrombocytopenia",
+      "Crohn Disease"
+     ],
+     "variants": [
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3C, TPMT*9",
+      "TPMT*1, TPMT*2, TPMT*3A, TPMT*3B, TPMT*3C, TPMT*7, TPMT*9, TPMT*10, TPMT*12, TPMT*13, TPMT*16, TPMT*17, TPMT*18, TPMT*23"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "carbamazepine": {
+   "drug": "carbamazepine",
+   "cid": 2554,
+   "genes": {
+    "HLA-A": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Hypersensitivity",
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Maculopapular Exanthema",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-A*31:01"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Maculopapular Exanthema",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*15:02, HLA-B*15:11",
+      "HLA-B*40:01"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "SCN1A": {
+     "level": "2B",
+     "categories": [
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Epilepsy"
+     ],
+     "variants": [
+      "rs3812718"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "lamotrigine": {
+   "drug": "lamotrigine",
+   "cid": 3878,
+   "genes": {
+    "HLA-B": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Epilepsy",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*15:02"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "vortioxetine": {
+   "drug": "vortioxetine",
+   "cid": 9966051,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4, CYP2D6*10"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "sertraline": {
+   "drug": "sertraline",
+   "cid": 68617,
+   "genes": {
+    "CYP2B6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2B6*1, CYP2B6*4, CYP2B6*6, CYP2B6*9"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    },
+    "CYP2C19": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Mental Disorders"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3, CYP2C19*17"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "venlafaxine": {
+   "drug": "venlafaxine",
+   "cid": 5656,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Depressive Disorder",
+      "Obsessive-Compulsive Disorder",
+      "Agitation",
+      "Alcohol-Related Disorders",
+      "Cardiotoxicity",
+      "Depression",
+      "Drug Toxicity",
+      "dysphoria",
+      "Edema",
+      "Major Depressive Disorder",
+      "Nausea",
+      "Tachycardia",
+      "Vomiting"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10",
+      "CYP2D6*1, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*81"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "desflurane": {
+   "drug": "desflurane",
+   "cid": 42113,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs772226819",
+      "rs1800559"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "enflurane": {
+   "drug": "enflurane",
+   "cid": 3226,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs1800559",
+      "rs772226819"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "halothane": {
+   "drug": "halothane",
+   "cid": 3562,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs1800559",
+      "rs772226819"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "isoflurane": {
+   "drug": "isoflurane",
+   "cid": 3763,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs1800559",
+      "rs772226819"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "methoxyflurane": {
+   "drug": "methoxyflurane",
+   "cid": 4116,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs772226819",
+      "rs1800559"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "sevoflurane": {
+   "drug": "sevoflurane",
+   "cid": 5206,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs1800559",
+      "rs772226819"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "succinylcholine": {
+   "drug": "succinylcholine",
+   "cid": 5314,
+   "genes": {
+    "CACNA1S": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs772226819",
+      "rs1800559"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "RYR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Malignant Hyperthermia"
+     ],
+     "variants": [
+      "rs118192177",
+      "rs118192176",
+      "rs193922832",
+      "rs193922809",
+      "rs118192175",
+      "rs193922762",
+      "rs118192124",
+      "rs193922770",
+      "rs193922802",
+      "rs28933397",
+      "rs193922843",
+      "rs1801086",
+      "rs112563513",
+      "rs193922816",
+      "rs193922748",
+      "rs118192161",
+      "rs121918595",
+      "rs121918596",
+      "rs193922753",
+      "rs121918593",
+      "rs28933396",
+      "rs193922807",
+      "rs118192162",
+      "rs193922768",
+      "rs121918592",
+      "rs193922747",
+      "rs118192122",
+      "rs118192172",
+      "rs118192168",
+      "rs121918594",
+      "rs193922803",
+      "rs193922878",
+      "rs193922876",
+      "rs193922764",
+      "rs193922772",
+      "rs193922818",
+      "rs118192163",
+      "rs111888148",
+      "rs118192178"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "tacrolimus": {
+   "drug": "tacrolimus",
+   "cid": 445643,
+   "genes": {
+    "CYP3A5": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Heart transplantation",
+      "Hematopoietic stem cell transplantation",
+      "Kidney Transplantation",
+      "Lung transplantation",
+      "Liver transplantation"
+     ],
+     "variants": [
+      "CYP3A5*1, CYP3A5*3, CYP3A5*6, CYP3A5*7",
+      "CYP3A5*1, CYP3A5*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    },
+    "CYP3A4": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK",
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Kidney Transplantation",
+      "Liver transplantation",
+      "Proteinuria",
+      "Organ Transplantation",
+      "Laparoscopic sleeve gastrectomy",
+      "Lung transplantation"
+     ],
+     "variants": [
+      "rs4646437",
+      "CYP3A4*1, CYP3A4*3, CYP3A4*20, CYP3A4*22",
+      "CYP3A4*1, CYP3A4*18, CYP3A4*20, CYP3A4*22",
+      "rs2242480"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "neomycin": {
+   "drug": "neomycin",
+   "cid": 8378,
+   "genes": {
+    "MT-RNR1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Ototoxicity"
+     ],
+     "variants": [
+      "rs267606617"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "quetiapine": {
+   "drug": "quetiapine",
+   "cid": 5002,
+   "genes": {
+    "CYP3A4": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP3A4*1, CYP3A4*20, CYP3A4*22"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "fluvoxamine": {
+   "drug": "fluvoxamine",
+   "cid": 5324346,
+   "genes": {
+    "CYP2D6": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Depressive Disorder"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*14"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "meloxicam": {
+   "drug": "meloxicam",
+   "cid": 54677470,
+   "genes": {
+    "CYP2C9": {
+     "level": "1A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C9*1, CYP2C9*2, CYP2C9*3, CYP2C9*13"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "sacituzumab govitecan": {
+   "drug": "sacituzumab govitecan",
+   "cid": null,
+   "genes": {
+    "UGT1A1": {
+     "level": "1A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "adverse events",
+      "Discontinuation",
+      "Neutropenia"
+     ],
+     "variants": [
+      "UGT1A1*1, UGT1A1*28"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "elexacaftor / tezacaftor / ivacaftor": {
+   "drug": "elexacaftor / tezacaftor / ivacaftor",
+   "cid": null,
+   "genes": {
+    "CFTR": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Cystic Fibrosis"
+     ],
+     "variants": [
+      "rs121908751",
+      "rs35516286",
+      "rs186089140",
+      "rs75039782",
+      "rs1800076",
+      "rs80224560",
+      "rs397508572",
+      "rs397508573",
+      "rs36210737",
+      "rs77932196"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ivacaftor": {
+   "drug": "ivacaftor",
+   "cid": 16220172,
+   "genes": {
+    "CFTR": {
+     "level": "1A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Cystic Fibrosis"
+     ],
+     "variants": [
+      "rs397508602",
+      "rs1800100",
+      "rs1800111",
+      "rs77409459",
+      "rs35516286",
+      "rs186089140",
+      "rs75039782",
+      "rs1800076",
+      "rs80224560",
+      "rs397508572",
+      "rs397508573",
+      "rs121908755",
+      "rs74551128",
+      "rs397508537",
+      "rs113993958",
+      "rs77834169",
+      "rs75527207",
+      "rs78769542",
+      "rs186045772",
+      "rs397508256",
+      "rs75541969",
+      "rs121908757",
+      "rs368505753",
+      "rs115545701",
+      "rs11971167",
+      "rs193922525",
+      "rs121908753",
+      "rs121909041",
+      "rs267606723",
+      "rs397508513",
+      "rs78655421",
+      "rs121909005",
+      "rs121909020",
+      "rs202179988",
+      "rs121909013",
+      "rs397508759",
+      "rs397508442",
+      "rs141033578",
+      "rs150212784",
+      "rs121908752",
+      "rs74503330",
+      "rs80282562",
+      "rs397508288",
+      "rs77932196"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "interferons": {
+   "drug": "interferons",
+   "cid": null,
+   "genes": {
+    "IFNL3": {
+     "level": "1B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic hepatitis C virus infection"
+     ],
+     "variants": [
+      "rs8099917"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "sn-38": {
+   "drug": "SN-38",
+   "cid": 104842,
+   "genes": {
+    "UGT1A1": {
+     "level": "1B",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "UGT1A1*1, UGT1A1*6, UGT1A1*28"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "nicotine": {
+   "drug": "nicotine",
+   "cid": 89594,
+   "genes": {
+    "CYP2A6": {
+     "level": "1B",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Tobacco Use Disorder"
+     ],
+     "variants": [
+      "CYP2A6*1, CYP2A6*1x2, CYP2A6*2, CYP2A6*4, CYP2A6*7, CYP2A6*9, CYP2A6*10, CYP2A6*11, CYP2A6*12, CYP2A6*13, CYP2A6*14, CYP2A6*15, CYP2A6*17, CYP2A6*19, CYP2A6*20, CYP2A6*23, CYP2A6*24, CYP2A6*25, CYP2A6*26, CYP2A6*27, CYP2A6*28, CYP2A6*35, CYP2A6*38, CYP2A6*39, CYP2A6*41, CYP2A6*46, CYP2A6*55"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "CHRNA5": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Tobacco Use Disorder"
+     ],
+     "variants": [
+      "rs16969968"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "drugs for treatment of tuberculosis": {
+   "drug": "Drugs For Treatment Of Tuberculosis",
+   "cid": null,
+   "genes": {
+    "NAT2": {
+     "level": "1B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug-induced liver injury",
+      "Toxic liver disease",
+      "Tuberculosis"
+     ],
+     "variants": [
+      "NAT2*1, NAT2*4, NAT2*5, NAT2*6, NAT2*7, NAT2*14, NAT2*16"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "isoniazid": {
+   "drug": "isoniazid",
+   "cid": 3767,
+   "genes": {
+    "NAT2": {
+     "level": "1B",
+     "categories": [
+      "Toxicity",
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Drug-induced liver injury",
+      "Toxic liver disease",
+      "Tuberculosis"
+     ],
+     "variants": [
+      "NAT2*1, NAT2*4, NAT2*5, NAT2*6, NAT2*7, NAT2*14, NAT2*16",
+      "NAT2*1, NAT2*4, NAT2*5, NAT2*6, NAT2*6J, NAT2*7, NAT2*7G, NAT2*14, NAT2*16, NAT2*39"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "dextromethorphan": {
+   "drug": "dextromethorphan",
+   "cid": 5360696,
+   "genes": {
+    "CYP2D6": {
+     "level": "1B",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*3, CYP2D6*4, CYP2D6*4x2, CYP2D6*4xN, CYP2D6*5, CYP2D6*6, CYP2D6*10, CYP2D6*10x2, CYP2D6*13, CYP2D6*14, CYP2D6*15, CYP2D6*17, CYP2D6*18, CYP2D6*21, CYP2D6*29, CYP2D6*31, CYP2D6*36, CYP2D6*40, CYP2D6*41, CYP2D6*42, CYP2D6*44, CYP2D6*49, CYP2D6*52, CYP2D6*55, CYP2D6*56, CYP2D6*59, CYP2D6*69, CYP2D6*84, CYP2D6*100, CYP2D6*101"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "methotrexate": {
+   "drug": "methotrexate",
+   "cid": 126941,
+   "genes": {
+    "MTHFR": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Arthritis",
+      "Psoriatic",
+      "Drug Toxicity",
+      "Juvenile Rheumatoid Arthritis",
+      "Rheumatoid arthritis",
+      "Acute lymphoblastic leukemia",
+      "Leukopenia",
+      "Lymphoma",
+      "Mucositis",
+      "Myelosuppression",
+      "Neoplasms",
+      "Neutropenia",
+      "Osteosarcoma",
+      "Primary central nervous system lymphoma",
+      "Thrombocytopenia",
+      "Toxic liver disease"
+     ],
+     "variants": [
+      "rs1801133"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "SLC19A1": {
+     "level": "2A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Rheumatoid arthritis"
+     ],
+     "variants": [
+      "rs1051266"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "ATIC": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Rheumatoid arthritis"
+     ],
+     "variants": [
+      "rs4673993"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "dapsone": {
+   "drug": "dapsone",
+   "cid": 2955,
+   "genes": {
+    "HLA-B": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Hypersensitivity",
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Leprosy",
+      "Maculopapular Exanthema",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome"
+     ],
+     "variants": [
+      "HLA-B*13:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "nevirapine": {
+   "drug": "nevirapine",
+   "cid": 4463,
+   "genes": {
+    "CYP2B6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK",
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "HIV infectious disease",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "rs3745274",
+      "rs28399499"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-C": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Drug Reaction with Eosinophilia and Systemic Symptoms",
+      "Exanthema",
+      "Hypersensitivity",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-C*04:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-DRB1": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "HLA-DRB1*01:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "methazolamide": {
+   "drug": "methazolamide",
+   "cid": 4100,
+   "genes": {
+    "HLA-B": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*59:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-C": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-C*01:02"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "salmeterol": {
+   "drug": "salmeterol",
+   "cid": 5152,
+   "genes": {
+    "ADRB2": {
+     "level": "2A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Asthma"
+     ],
+     "variants": [
+      "rs1042713"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "hmg coa reductase inhibitors": {
+   "drug": "hmg coa reductase inhibitors",
+   "cid": null,
+   "genes": {
+    "SLCO1B1": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "statin-related myopathy"
+     ],
+     "variants": [
+      "rs4149056"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "captopril": {
+   "drug": "captopril",
+   "cid": 44093,
+   "genes": {
+    "ACE": {
+     "level": "2A",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Chronic Obstructive Pulmonary Disease",
+      "Diabetes Mellitus",
+      "Type 2",
+      "Heart Failure"
+     ],
+     "variants": [
+      "rs1799752"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "mirtazapine": {
+   "drug": "mirtazapine",
+   "cid": 4205,
+   "genes": {
+    "CYP2D6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "rabeprazole": {
+   "drug": "rabeprazole",
+   "cid": 5029,
+   "genes": {
+    "CYP2C19": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "methadone": {
+   "drug": "methadone",
+   "cid": 4095,
+   "genes": {
+    "CYP2B6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Heroin Dependence",
+      "Opioid-Related Disorders"
+     ],
+     "variants": [
+      "CYP2B6*1, CYP2B6*4, CYP2B6*6, CYP2B6*18"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "oxycodone": {
+   "drug": "oxycodone",
+   "cid": 5284603,
+   "genes": {
+    "CYP2D6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Pain"
+     ],
+     "variants": [
+      "CYP2D6*1, CYP2D6*1xN, CYP2D6*2, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*5, CYP2D6*6, CYP2D6*7"
+     ],
+     "in_guideline": true,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "sulfamethoxazole / trimethoprim": {
+   "drug": "sulfamethoxazole / trimethoprim",
+   "cid": null,
+   "genes": {
+    "HLA-B": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*13:01, HLA-B*15:02, HLA-B*38:02"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "HLA-C": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-C*06:02, HLA-C*07:27, HLA-C*08:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "antiepileptics": {
+   "drug": "antiepileptics",
+   "cid": null,
+   "genes": {
+    "HLA-B": {
+     "level": "2A",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Maculopapular Exanthema",
+      "Severe Cutaneous Adverse Reactions",
+      "Stevens-Johnson Syndrome",
+      "Toxic Epidermal Necrolysis"
+     ],
+     "variants": [
+      "HLA-B*15:02"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "fentanyl": {
+   "drug": "fentanyl",
+   "cid": 3345,
+   "genes": {
+    "CYP3A4": {
+     "level": "2A",
+     "categories": [
+      "Dosage"
+     ],
+     "phenotypes": [
+      "Pain",
+      "Postoperative"
+     ],
+     "variants": [
+      "rs2242480"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "bupropion": {
+   "drug": "bupropion",
+   "cid": 444,
+   "genes": {
+    "CYP2B6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2B6*1, CYP2B6*4, CYP2B6*5, CYP2B6*6, CYP2B6*18, CYP2B6*22, CYP2B6*30"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "debrisoquine": {
+   "drug": "debrisoquine",
+   "cid": 2966,
+   "genes": {
+    "CYP2D6": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [],
+     "variants": [
+      "CYP2D6*1, CYP2D6*2, CYP2D6*2xN, CYP2D6*3, CYP2D6*4, CYP2D6*4xN, CYP2D6*5, CYP2D6*6, CYP2D6*8, CYP2D6*9, CYP2D6*10, CYP2D6*15, CYP2D6*17, CYP2D6*18, CYP2D6*21, CYP2D6*29, CYP2D6*36xN, CYP2D6*38"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "clobazam": {
+   "drug": "clobazam",
+   "cid": 2789,
+   "genes": {
+    "CYP2C19": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Epilepsy"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "norclobazam": {
+   "drug": "norclobazam",
+   "cid": 89657,
+   "genes": {
+    "CYP2C19": {
+     "level": "2A",
+     "categories": [
+      "Metabolism/PK"
+     ],
+     "phenotypes": [
+      "Epilepsy"
+     ],
+     "variants": [
+      "CYP2C19*1, CYP2C19*2, CYP2C19*3"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": false
+    }
+   }
+  },
+  "platinum compounds": {
+   "drug": "Platinum compounds",
+   "cid": null,
+   "genes": {
+    "XRCC1": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Neoplasms"
+     ],
+     "variants": [
+      "rs25487"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "erlotinib": {
+   "drug": "erlotinib",
+   "cid": 176870,
+   "genes": {
+    "EGFR": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Adenocarcinoma",
+      "Drug Resistance",
+      "Lung Neoplasms",
+      "Non-Small Cell Lung Carcinoma"
+     ],
+     "variants": [
+      "rs121434569"
+     ],
+     "in_guideline": false,
+     "on_drug_label": true,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "ethanol": {
+   "drug": "ethanol",
+   "cid": 702,
+   "genes": {
+    "ALDH2": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Alcohol abuse"
+     ],
+     "variants": [
+      "rs671"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "aspirin": {
+   "drug": "aspirin",
+   "cid": 2244,
+   "genes": {
+    "HLA-DPB1": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Asthma"
+     ],
+     "variants": [
+      "HLA-DPB1*03:01"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "hydrochlorothiazide": {
+   "drug": "hydrochlorothiazide",
+   "cid": 3639,
+   "genes": {
+    "ADD1": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Essential hypertension",
+      "Hypertension"
+     ],
+     "variants": [
+      "rs4961"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "rituximab": {
+   "drug": "rituximab",
+   "cid": null,
+   "genes": {
+    "FCGR3A": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Neuromyelitis Optica",
+      "Rheumatoid arthritis"
+     ],
+     "variants": [
+      "rs396991"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "hormonal contraceptives for systemic use": {
+   "drug": "hormonal contraceptives for systemic use",
+   "cid": null,
+   "genes": {
+    "F2": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Stroke",
+      "Venous Thrombosis"
+     ],
+     "variants": [
+      "rs1799963"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    },
+    "F5": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Thrombotic disease"
+     ],
+     "variants": [
+      "rs6025"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "anthracyclines and related substances": {
+   "drug": "anthracyclines and related substances",
+   "cid": null,
+   "genes": {
+    "SLC28A3": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Cardiotoxicity"
+     ],
+     "variants": [
+      "rs7853758"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "daunorubicin": {
+   "drug": "daunorubicin",
+   "cid": 30323,
+   "genes": {
+    "SLC28A3": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Cardiotoxicity"
+     ],
+     "variants": [
+      "rs7853758"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "doxorubicin": {
+   "drug": "doxorubicin",
+   "cid": 31703,
+   "genes": {
+    "SLC28A3": {
+     "level": "2B",
+     "categories": [
+      "Toxicity"
+     ],
+     "phenotypes": [
+      "Cardiotoxicity"
+     ],
+     "variants": [
+      "rs7853758"
+     ],
+     "in_guideline": true,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  },
+  "etanercept": {
+   "drug": "etanercept",
+   "cid": null,
+   "genes": {
+    "TNF": {
+     "level": "2B",
+     "categories": [
+      "Efficacy"
+     ],
+     "phenotypes": [
+      "Arthritis",
+      "Psoriatic",
+      "Crohn Disease",
+      "Inflammation",
+      "Psoriasis",
+      "Rheumatoid arthritis",
+      "Spondylitis",
+      "Ankylosing"
+     ],
+     "variants": [
+      "rs1800629"
+     ],
+     "in_guideline": false,
+     "on_drug_label": false,
+     "pk": false,
+     "pd": true
+    }
+   }
+  }
+ }
+}

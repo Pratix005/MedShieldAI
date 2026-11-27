@@ -1,117 +1,169 @@
-🧬 MedShield AI
-Personalized Drug–Gene Risk Prediction System
+# MedShield AI
 
-MedShield AI is an AI-driven healthcare prototype designed to predict drug–gene interactions and assess potential risks based on a patient’s genetic profile. The system classifies medications as Safe, Risk, or High-Risk, and intelligently recommends safer alternative drugs when potential adverse interactions are detected.
+**Pharmacogenomic evidence lookup for prescribed drugs.**
 
-This project aims to support precision medicine by combining machine learning, bioinformatics, and chemical informatics to improve medication safety and personalization.
+Given a drug name, MedShield reports the curated drug–gene associations recorded
+for it in PharmGKB, with each finding's evidence level, phenotype category
+(toxicity / efficacy / dosage / metabolism) and whether it is backed by a
+published dosing guideline or a regulatory drug label.
 
-🚀 Key Features
-🔬 Drug–Gene Risk Prediction
+> **Research and educational prototype. Not a medical device and not clinical
+> advice.** Findings are drug–gene associations from published literature. They
+> do not account for an individual's genotype, dose, comorbidities or other
+> medicines. Never change a prescription without a clinician.
 
-Predicts interaction risk between genes and prescribed drugs
+---
 
-Outputs clear classifications:
+## Why this is a lookup tool, not a prediction model
 
-✅ Safe
+Clinical pharmacogenomics is a curated-evidence field. CPIC, PharmGKB and DPWG
+publish drug–gene guidance derived from clinical studies, and production
+decision-support tools look that guidance up. Nothing infers it from molecular
+structure, because it is not inferable from molecular structure: that CYP2C19
+poor metabolisers underrespond to clopidogrel is a clinical finding, not a
+property you can read off a SMILES string.
 
-⚠️ Risk
+This project previously inverted that. A small neural network over six RDKit
+descriptors produced the displayed risk, and the measured result was what you
+would expect:
 
-❌ High-Risk
+| | held-out ROC-AUC |
+|---|---|
+| gene identity only (no chemistry) | 0.587 ± 0.027 |
+| gene + molecular descriptors | 0.653 ± 0.083 |
 
-💊 Intelligent Drug Recommendation
+Evaluated with real PharmGKB "not associated" negatives and a drug-disjoint
+split, so no drug appears in both train and test. Chemistry contributes a real
+but small amount (+0.066 AUC); the model heavily overfits (train 0.96 against
+test 0.65); and four of its eight genes have essentially no negatives in the
+data, so it learns "always associated" for them. That is not a basis for a
+clinical display, so the model is reported in a clearly-labelled exploratory
+panel and never sets the verdict.
 
-Automatically suggests safer alternative medications
+The curated knowledge base is the product.
 
-Helps reduce adverse drug reactions (ADRs)
+## What the knowledge base covers
 
-Supports clinicians and patients in decision-making
+Built from the PharmGKB extracts in `CORE_AI/data/`:
 
-🧪 Molecular Structure Visualization
+- **182 drug–gene pairs** across **48 genes** and 135 drugs
+- Evidence levels **1A / 1B / 2A / 2B** only (1A = in a dosing guideline or drug
+  label, with replicated evidence)
+- Phenotype category per finding, which is what carries clinical meaning:
+  *toxicity* ("may cause harm") reads differently from *efficacy* ("may not work")
+- Guideline and drug-label backing flags
 
-Uses RDKit to generate and display drug molecule structures
+It covers the genes that matter most clinically — **DPYD** (fluoropyrimidine
+toxicity), **HLA-B** (abacavir hypersensitivity, allopurinol and carbamazepine
+severe cutaneous reactions), **UGT1A1**, **NUDT15**, **TPMT**, **CYP2D6**,
+**CYP2C19**, **SLCO1B1**, **G6PD**, **MT-RNR1**, **RYR1/CACNA1S** — most of
+which were absent from the eight genes the model knows.
 
-Enables better understanding of chemical properties and interactions
+## Design decisions that matter
 
+**Absence of evidence is reported as `Unknown`, never `Low`.** A drug with no
+annotation at level 1A–2B yields "No curated evidence found", with explicit text
+that this is not evidence of safety. A grey band, not a green one. This is
+enforced by a test.
 
-🧠 Machine Learning–Powered
+**No drug is recommended as an alternative.** The former "Safer Drug
+Alternatives" panel chose drugs whose gene list did not intersect the flagged
+gene. For rivaroxaban flagged on CYP3A4 it suggested warfarin — a different
+class, different indication, different monitoring, worse bleeding profile.
+Choosing an alternative needs indication and patient context this project does
+not hold, and it is the output a user is most likely to act on, so it was
+removed rather than patched.
 
-Uses a Multi-Layer Perceptron (MLP) neural network
+**Drug names resolve through PubChem, including brand names and salts.** A name
+is resolved to a PubChem CID, and if that CID is a marketed salt its parent
+compound is used: `Plavix` → CID 115366 (clopidogrel bisulfate) → parent CID
+60606 (clopidogrel) → the CYP2C19 finding. Combination products are split and
+each component looked up, so `ezetimibe / simvastatin` still surfaces
+simvastatin's SLCO1B1 association.
 
-Trained on curated drug–gene interaction datasets
+**No chemistry is hard-coded.** An earlier version shipped a hand-written SMILES
+table in which 24 of 30 entries were the wrong molecule (warfarin at 164 Da
+against a true 308 Da) and four were not parseable SMILES at all. Structures now
+come from PubChem, are validated with RDKit before being cached, and the cache
+is keyed on canonical names with negative caching.
 
-Model stored as trained_mlp.pth
+## Layout
 
-🧠 Technology Stack
-🖥️ Frontend
+```
+medshield_ai/
+  CORE_AI/
+    knowledge_base.py        query the curated KB (lookup, combinations, banding)
+    build_knowledge_base.py  build data/knowledge_base.json from the PharmGKB TSVs
+    drug_database.py         PubChem name -> SMILES / CID / parent CID, cached
+    featurize.py             RDKit descriptors + gene one-hot; model domain check
+    train_association.py     honest retrain: real negatives, drug-disjoint split,
+                             gene-only baseline
+    train_real_model.py      original training script (superseded; see above)
+    data/                    PharmGKB extracts + generated knowledge_base.json
+  WEB_APP/
+    app.py                   Flask API; curated verdict + exploratory model panel
+    templates/index.html     UI
+  tests/
+    test_knowledge_base.py   12 tests, including clinical correctness assertions
+```
 
-HTML5
+## Setup
 
-CSS3
+```bash
+python -m venv .venv
+.venv/Scripts/python -m pip install -r medshield_ai/requirements.txt
+```
 
-JavaScript
+`torch` must come from the CPU index — the default PyPI wheel on Windows pulls
+several GB of CUDA libraries this project never uses:
 
-Bootstrap (responsive UI)
+```bash
+.venv/Scripts/python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.0
+```
 
-⚙️ Backend
+Build the knowledge base, then run:
 
-Python
+```bash
+cd medshield_ai
+../.venv/Scripts/python -m CORE_AI.build_knowledge_base
+../.venv/Scripts/python tests/test_knowledge_base.py
+cd WEB_APP && ../../.venv/Scripts/python app.py      # http://127.0.0.1:5000
+```
 
-Flask (REST API)
+## API
 
-Pandas & NumPy (data handling)
+`POST /predict` with `{"drug": "Xeloda"}`:
 
-PyTorch (model inference)
+```json
+{
+  "overall_risk": "High",
+  "resolved": {"label": "capecitabine", "cid": 60953, "matched_on": "PubChem CID 60953"},
+  "curated": {
+    "available": true,
+    "findings": [{
+      "gene": "DPYD", "evidence_level": "1A",
+      "categories": ["Toxicity"], "meaning": "Risk of an adverse reaction",
+      "in_guideline": true, "on_drug_label": true
+    }],
+    "source": "PharmGKB clinical annotations, evidence levels 1A-2B"
+  },
+  "model": {"available": true, "rows": [], "caveat": "Exploratory..."},
+  "disclaimer": "Research and educational prototype..."
+}
+```
 
-RDKit (chemical informatics)
+`GET /api/genes` returns the genes the knowledge base covers versus the eight
+the model supports.
 
-🤖 Machine Learning Model
+## Known limitations
 
-Model Type: MLP (Multi-Layer Perceptron)
-
-Input: Drug molecular features + Gene encoding
-
-Output: Risk classification (Safe / Risk / High-Risk)
-
-🏗️ System Architecture
-
-User inputs drug name and gene information
-
-Backend converts drug to molecular descriptors (RDKit)
-
-Gene data is encoded numerically
-
-MLP model predicts interaction risk
-
-System:
-
-Displays risk level
-
-Suggests safer alternatives (if required)
-
-Generates downloadable reports
-
-📈 Use Cases
-
-💉 Personalized medicine decision support
-
-🏥 Clinical research and pharmacogenomics studies
-
-🎓 Educational tool for drug–gene interaction analysis
-
-🧪 Early-stage screening of adverse drug reactions
-
-🔮 Future Enhancements (Planned)
-
-🧬 Blood Report Integration
-
-Use biomarkers (LFT, KFT, CBC, etc.) for enhanced prediction
-
-📁 Patient history & prescription tracking
-
-🌐 Integration with public pharmacogenomics databases (e.g., PharmGKB)
-
-🧠 Advanced models (Graph Neural Networks for molecules)
-
-🔐 Secure authentication & patient data privacy
-
-📱 Mobile-friendly UI / API integration
+- Findings are drug–gene level, **not genotype level**. Real guidance is keyed to
+  diplotypes (CYP2C19 \*2/\*2, HLA-B\*57:01). Acting on a finding requires the
+  patient's actual genotype, which this tool does not take as input.
+- The PharmGKB extracts in `data/` are a point-in-time snapshot with no version
+  stamp. A production system would pin and refresh them.
+- 19 of 135 knowledge-base drugs have no PubChem CID (mostly multi-component or
+  non-compound entries), so those match by name only.
+- The ML model remains weak and overfit; see the table above. Improving it needs
+  substructure features (Morgan fingerprints) and genes that have negatives, not
+  tuning.

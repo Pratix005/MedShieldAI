@@ -49,11 +49,11 @@ def _risk_level(score: float):
 
 def predict_genetic_risks(drug_name):
     analysis = analyze_drug_structure(drug_name)
-    smiles = analysis["smiles"]
 
     scores = []
     for gene in GENE_LIST:
-        feat = build_pair_features(smiles, gene)
+        # build_pair_features resolves the SMILES from the name itself.
+        feat = build_pair_features(drug_name, gene)
         if feat is None:
             scores.append(0.0)
             continue

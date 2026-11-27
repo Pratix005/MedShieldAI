@@ -1,0 +1,27 @@
+# Environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Local backups and temp files
+*.bak
+*.legacy.json
+medshield_ai/CORE_AI/drug_database.json.tmp
+
+# Generated molecule renders
+medshield_ai/WEB_APP/static/molecules/
+
+# Never commit patient data
+*.patient.csv
+patient_data/
+
+# NOTE: data/merged_training_data.csv (41 MB, derived from the source TSVs via
+# merge_datasets.py), missing_smiles.log, and the three trained_gnn.pth copies
+# are already tracked in this repository's history, so listing them here would
+# have no effect. They are left tracked deliberately rather than deleted in
+# this change; see README "Known limitations".
