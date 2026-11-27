@@ -582,10 +582,39 @@
     </div>
   </div>
 
-<!-- 🔹 NEW: AI Suggested Alternatives -->
-<div id="alternativesCard" class="card mt-3 p-3" style="display:none;">
-  <h5 class="mb-2">💡 Safer Drug Alternatives</h5>
-  <ul id="alternativesList" class="list-group list-group-flush"></ul>
+<!-- Curated clinical evidence. This is the authoritative panel: every row
+     traces to a PharmGKB clinical annotation with a stated evidence level. -->
+<div id="curatedCard" class="card mt-3 p-3" style="display:none;">
+  <h5 class="mb-1">Curated pharmacogenomic evidence</h5>
+  <div id="curatedMeta" class="text-muted" style="font-size:.82rem;"></div>
+  <div class="table-responsive mt-2">
+    <table class="table table-sm align-middle mb-1">
+      <thead>
+        <tr><th>Gene</th><th>Level</th><th>Category</th><th>What it means</th><th>Backing</th></tr>
+      </thead>
+      <tbody id="curatedBody"></tbody>
+    </table>
+  </div>
+  <div class="text-muted" style="font-size:.78rem;">
+    PharmGKB levels grade how well <em>established</em> an association is, not how
+    severe it is. 1A = in a dosing guideline or drug label.
+  </div>
+</div>
+
+<!-- Shown when the drug has no curated annotation. Deliberately NOT phrased as
+     reassurance: absence of evidence is not evidence of safety. -->
+<div id="noEvidenceCard" class="card mt-3 p-3" style="display:none;">
+  <h5 class="mb-1">No curated evidence found</h5>
+  <div id="noEvidenceText" class="text-muted" style="font-size:.85rem;"></div>
+</div>
+
+<!-- The former "Safer Drug Alternatives" panel was removed. It derived
+     suggestions from a small hand-written map and recommended warfarin as a
+     substitute for a DOAC. Picking an alternative needs indication and patient
+     context this project does not hold. -->
+
+<div id="disclaimerBar" class="mt-3 p-2 rounded"
+     style="display:none;background:#fff4e5;border:1px solid #ffd59e;font-size:.78rem;color:#7a4b00;">
 </div>
 
 <!-- 🔹 NEW: Quick Scanner Controls -->
@@ -802,19 +831,27 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
     const result = await predictDrug(drug, gene);
     lastResult = result; // keep for report download
 
-    // overall risk
-    const risk = result.overall_risk || 'Low';
-    const color = risk === 'High' ? getComputedStyle(document.documentElement).getPropertyValue('--danger').trim() || '#e53935'
-                : risk === 'Medium' ? getComputedStyle(document.documentElement).getPropertyValue('--warn').trim() || '#fbc02d'
-                : getComputedStyle(document.documentElement).getPropertyValue('--success').trim() || '#43a047';
-    const percent = risk === 'High' ? 90 : risk === 'Medium' ? 60 : 30;
+    // Overall band, from the CURATED evidence (not the model).
+    // 'Unknown' is grey and sits mid-gauge: it must not read as reassurance.
+    const risk = result.overall_risk || 'Unknown';
+    const color = risk === 'High' ? '#e53935'
+                : risk === 'Medium' ? '#fbc02d'
+                : risk === 'Low' ? '#43a047'
+                : '#78909c';
+    const percent = risk === 'High' ? 90 : risk === 'Medium' ? 60 : risk === 'Low' ? 30 : 50;
 
     // update progress bar + text
     const bar = document.getElementById('riskBar');
     bar.style.width = percent + '%';
     bar.style.backgroundColor = color;
-    document.getElementById('riskLabel').textContent = `${risk} Risk (${(percent)}%)`;
-    document.getElementById('info').innerHTML = `<b>Drug:</b> ${result.drug} — <small style="color:#6b5b95">${result.role || role}</small>`;
+    document.getElementById('riskLabel').textContent =
+      risk === 'Unknown' ? 'No curated evidence' : `${risk} concern`;
+    document.getElementById('info').innerHTML =
+      `<b>Drug:</b> ${esc(result.drug)} — <small style="color:#6b5b95">${esc(result.role || role)}</small>`
+      + (result.recommendation ? `<div class="mt-1" style="font-size:.84rem;color:#4a148c;">${esc(result.recommendation)}</div>` : '');
+
+    // Curated evidence panel + disclaimer.
+    renderCurated(result);
 
     // show result block
     document.getElementById('result').style.display = 'block';
@@ -851,7 +888,11 @@ document.getElementById('predictForm').addEventListener('submit', async (e) => {
               }
             },
             legend: { display:false },
-            title: { display:true, text:'Predicted Gene Affinities', color:'#4a148c', font:{size:15, weight:'700'} }
+            // Not affinities. The model predicts whether a drug-gene pair is
+            // recorded in PharmGKB; held-out ROC-AUC ~0.65 against ~0.59 for a
+            // gene-only baseline.
+            title: { display:true, text:'Exploratory model signal — not clinical evidence', color:'#6b5b95', font:{size:13, weight:'600'} },
+            subtitle: { display:true, text:'See the curated evidence panel for the actual findings', color:'#8a7fa8', font:{size:11} }
           },
           onHover: (evt, activeEls) => {
             evt.native && (evt.native.target.style.cursor = activeEls && activeEls.length ? 'pointer' : 'default');
@@ -1279,24 +1320,76 @@ async function quickCheckDrug(drugName) {
       document.getElementById("moleculeCard").style.display = "block";
       document.getElementById("moleculeImage").src = data.molecule_image;
     }
-    // Alternatives
-    const altCard = document.getElementById("alternativesCard");
-    const altList = document.getElementById("alternativesList");
-    altList.innerHTML = "";
-    if (data.alternatives && data.alternatives.length > 0) {
-      data.alternatives.forEach(alt => {
-        const li = document.createElement("li");
-        li.className = "list-group-item";
-        li.innerHTML = `<strong>${alt.drug}</strong><br><small>${alt.reason}</small>`;
-        altList.appendChild(li);
-      });
-      altCard.style.display = "block";
-    } else {
-      altCard.style.display = "none";
-    }
+    renderCurated(data);
   } catch (err) {
     riskBadge.className = "badge bg-danger";
     riskBadge.textContent = "Error";
+  }
+}
+
+/* Escape anything that reaches innerHTML. Drug names, phenotype strings and
+   variant identifiers all originate outside this page. */
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+/* Render the curated-evidence panel. This is the authoritative output. */
+function renderCurated(data) {
+  const card = document.getElementById("curatedCard");
+  const none = document.getElementById("noEvidenceCard");
+  const body = document.getElementById("curatedBody");
+  const meta = document.getElementById("curatedMeta");
+  const bar = document.getElementById("disclaimerBar");
+  if (!card || !body) return;
+
+  const curated = data.curated || {};
+  const findings = curated.findings || [];
+  body.innerHTML = "";
+
+  if (findings.length) {
+    findings.forEach(f => {
+      const backing = [];
+      if (f.in_guideline) backing.push("dosing guideline");
+      if (f.on_drug_label) backing.push("drug label");
+      const strong = f.evidence_level === "1A" || f.evidence_level === "1B";
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        `<td><strong>${esc(f.gene)}</strong></td>` +
+        `<td><span class="badge ${strong ? "bg-danger" : "bg-secondary"}">${esc(f.evidence_level)}</span></td>` +
+        `<td>${esc((f.categories || []).join(", "))}</td>` +
+        `<td style="font-size:.84rem;">${esc(f.meaning)}</td>` +
+        `<td style="font-size:.78rem;">${backing.length ? esc(backing.join(" + ")) : "&mdash;"}</td>`;
+      body.appendChild(tr);
+    });
+
+    const bits = [];
+    if (data.resolved) {
+      bits.push(`Resolved to <strong>${esc(data.resolved.label)}</strong>`
+        + (data.resolved.cid ? ` (PubChem CID ${esc(data.resolved.cid)})` : ""));
+      if (data.resolved.matched_on && data.resolved.matched_on !== "name") {
+        bits.push(`matched on ${esc(data.resolved.matched_on)}`);
+      }
+    }
+    bits.push(esc(curated.source || ""));
+    if (curated.combination) bits.push("combination product, listed per component");
+    meta.innerHTML = bits.join(" &middot; ");
+    card.style.display = "block";
+    none.style.display = "none";
+  } else {
+    card.style.display = "none";
+    document.getElementById("noEvidenceText").textContent =
+      `No PharmGKB annotation at evidence levels 1A-2B was found for `
+      + `"${data.drug}". This is not evidence that the drug is safe \u2014 it means `
+      + `nothing meeting that evidence bar is recorded here. Any model output `
+      + `shown below is exploratory and must not be used for decisions.`;
+    none.style.display = "block";
+  }
+
+  if (data.disclaimer) {
+    bar.textContent = data.disclaimer;
+    bar.style.display = "block";
   }
 }
 

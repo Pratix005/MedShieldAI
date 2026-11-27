@@ -1,8 +1,7 @@
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
-# ✅ FIXED IMPORT PATH
-from CORE_AI.drug_database import DRUG_DATABASE
+from CORE_AI.drug_database import get_smiles
 
 
 
@@ -18,15 +17,11 @@ def analyze_drug_structure(drug_name):
     Convert drug name to molecular structure and extract features
     Returns: dict containing SMILES, graph, and molecular descriptors
     """
-    # ✅ Case-insensitive lookup
-    smiles = None
-    for name, smi in DRUG_DATABASE.items():
-        if drug_name.lower() == name.lower():
-            smiles = smi
-            break
+    # Resolved live via PubChem, with an on-disk cache (see drug_database.py).
+    smiles = get_smiles(drug_name)
 
     if not smiles:
-        raise ValueError(f"Drug '{drug_name}' not found in database")
+        raise ValueError(f"Could not resolve a structure for drug '{drug_name}'")
 
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:

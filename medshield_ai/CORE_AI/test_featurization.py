@@ -1,10 +1,10 @@
 from CORE_AI.featurize import build_pair_features
-from CORE_AI.drug_database import DRUG_DATABASE
 
 drug = "Warfarin"
 gene = "CYP2C9"
 
-feat = build_pair_features(DRUG_DATABASE[drug], gene)
+# build_pair_features takes a drug NAME and resolves the SMILES itself.
+feat = build_pair_features(drug, gene)
 if feat is not None:
     print("✅ Featurization successful:", len(feat), "features generated")
 else:
