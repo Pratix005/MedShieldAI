@@ -11,6 +11,7 @@ from CORE_AI.featurize import build_pair_features, in_model_domain, GENE_LIST
 from CORE_AI.train_real_model import DrugGeneMLP
 from CORE_AI.drug_database import get_smiles
 from CORE_AI import knowledge_base
+from CORE_AI import cpic
 
 # Optional RDKit support
 try:
@@ -47,6 +48,9 @@ UI_GENE_ALIAS = {"KCNH2": "hERG"}  # display alias for KCNH2
 if not knowledge_base.is_available():
     print("[warn] knowledge base is empty. The app will only return model output, "
           "which is exploratory. Run: python -m CORE_AI.build_knowledge_base")
+if not cpic.is_available():
+    print("[warn] CPIC tables missing; genotype-specific guidance is disabled. "
+          "Run: python -m CORE_AI.build_cpic")
 
 # ---- Helper Functions ----
 def risk_bucket(score: float) -> str:
@@ -130,6 +134,16 @@ def predict():
     gene_single = (data.get("gene") or "").strip().upper()
     role = data.get("role") or "patient"
 
+    # Optional patient genotype, e.g. {"CYP2C19": "*2/*2", "HLA-B": "*57:01 positive"}.
+    # When supplied, CPIC prescribing guidance for that genotype is returned.
+    genotypes = data.get("genotypes") or {}
+    if not isinstance(genotypes, dict):
+        return jsonify({"error": "'genotypes' must be an object mapping gene to "
+                                 "diplotype, phenotype or activity score."}), 400
+    genotypes = {str(g).upper().strip(): str(v).strip()
+                 for g, v in list(genotypes.items())[:20]
+                 if str(g).strip() and str(v).strip()}
+
     if not drug:
         return jsonify({"error": "Drug name is required."}), 400
 
@@ -189,6 +203,19 @@ def predict():
             "source": "model (exploratory)"
         })
 
+    # ---- 3b. Genotype-specific CPIC guidance, when a genotype is given. ----
+    # This is the only output that is specific to a patient. Everything else is
+    # drug-level. Resolved against the names CPIC uses, falling back to the
+    # knowledge base's resolved label (so "Xeloda" reaches capecitabine).
+    cpic_result = None
+    if genotypes:
+        for candidate in filter(None, [drug] + [m["label"] for m in matches]):
+            attempt = cpic.recommend(candidate, genotypes)
+            if attempt.get("available"):
+                cpic_result = attempt
+                break
+            cpic_result = cpic_result or attempt
+
     # ---- 4. Compose. The verdict is the curated one. ----
     band = verdict["band"]
     curated_genes = sorted({f["gene"] for f in findings})
@@ -209,6 +236,19 @@ def predict():
                                "dosing guideline.")
     if kb_result["combination"] and matches:
         recommendations.append("Combination product: findings are listed per component.")
+
+    # Genotype-specific guidance outranks the drug-level band in usefulness, so
+    # it leads the recommendation text when present.
+    if cpic_result and cpic_result.get("recommendations"):
+        strongest = cpic_result["recommendations"][0]
+        recommendations.insert(0, f"CPIC ({strongest['classification']}): "
+                                  f"{strongest['recommendation']}")
+    elif cpic_result and cpic_result.get("needs_additional_genotype"):
+        need = sorted({g for item in cpic_result["needs_additional_genotype"]
+                       for g in item["missing_genes"]})
+        if need:
+            recommendations.append("CPIC guidance for this drug also requires: "
+                                   + ", ".join(need) + ".")
 
     chart_data = {
         "labels": [r["gene"] for r in rows],
@@ -237,6 +277,10 @@ def predict():
             "source": "PharmGKB clinical annotations, evidence levels 1A-2B",
         },
 
+        # Genotype-specific CPIC prescribing guidance. Present only when a
+        # genotype was supplied. Text is CPIC's, verbatim.
+        "cpic": cpic_result,
+
         # Exploratory only. Kept separate so it cannot be mistaken for evidence.
         "model": {
             "available": bool(rows),
@@ -248,6 +292,13 @@ def predict():
         },
 
         "overall_risk": band,
+        # The band describes the DRUG, not the patient: it says a
+        # pharmacogenomic association is established for this drug. A patient
+        # whose genotype is normal can legitimately see a High band next to
+        # "use at standard dose". The two must not be presented as one number.
+        "band_scope": ("drug-level: an established pharmacogenomic association "
+                       "exists for this drug. Genotype-specific guidance, when a "
+                       "genotype is supplied, is in the 'cpic' field."),
         "recommendation": " ".join(recommendations),
 
         # Legacy keys the existing UI reads. rows = model output, which the UI
@@ -259,9 +310,36 @@ def predict():
 
         "disclaimer": ("Research and educational prototype. Not a medical device "
                        "and not clinical advice. Curated findings are drug-gene "
-                       "associations from published literature; they do not account "
-                       "for this patient's genotype, dose, comorbidities or other "
+                       "associations from published literature. CPIC guidance, when "
+                       "shown, applies to the genotype entered and does not account "
+                       "for dose, indication, comorbidities, organ function or other "
                        "medicines. Never change a prescription without a clinician."),
+    })
+
+
+@app.route("/api/genotype-options")
+def api_genotype_options():
+    """What genotype values are accepted, per gene.
+
+    Lets a caller populate a form without guessing at CPIC's notation, which
+    differs by gene: star alleles for CYP2C19, allele status for HLA-B,
+    HGVS-style variants plus activity scores for DPYD.
+    """
+    gene = (request.args.get("gene") or "").upper().strip()
+    if not cpic.is_available():
+        return jsonify({"error": "CPIC tables not built. "
+                                 "Run: python -m CORE_AI.build_cpic"}), 503
+    if not gene:
+        return jsonify({"genes": cpic.genes_covered()})
+    if gene not in cpic.genes_covered():
+        return jsonify({"error": f"CPIC has no prescribing tables for {gene}",
+                        "genes": cpic.genes_covered()}), 404
+    return jsonify({
+        "gene": gene,
+        "phenotypes": sorted(cpic._PHENOTYPE_KEYS.get(gene) or {}),
+        "lookup_keys": cpic.valid_phenotypes(gene),
+        "example_diplotypes": cpic.valid_diplotypes(gene, limit=25),
+        "diplotype_count": len(cpic.valid_diplotypes(gene)),
     })
 
 
